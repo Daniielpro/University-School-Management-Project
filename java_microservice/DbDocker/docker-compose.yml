@@ -1,0 +1,18 @@
+services:
+  db:
+    image: mysql:8.0.28
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'studentDB'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: '1234'
+      MYSQL_ROOT_PASSWORD: '1234'
+    ports:
+      - '3307:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+
+volumes:
+  my-db:
