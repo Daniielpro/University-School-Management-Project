@@ -4,7 +4,7 @@ const activitySchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   date: { type: Date, required: true },
-  createdAt: { type: Date, default: Date.now, index: { expires: '7d' } } // Auto eliminación en 7 días
+  createdAt: { type: Date, default: Date.now, index: { expires: '7d' } } // Self removal in 7 days
 });
 
 const Activity = mongoose.model('Activity', activitySchema);

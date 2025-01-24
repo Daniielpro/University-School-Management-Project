@@ -10,27 +10,27 @@ const port = process.env.PORT || 3003;
 // Middleware
 app.use(bodyParser.json());
 
-// Conexión a MongoDB
+// Connecting to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Ruta para actualizar una actividad
+// Path to update an activity
 app.put('/api/activities/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, date } = req.body;
 
-    // Validar datos
+    // Validate data
     if (!title || !description || !date) {
       return res.status(400).json({ error: 'All fields are required: title, description, date' });
     }
 
-    // Buscar y actualizar la actividad
+    // Find and update the activity
     const updatedActivity = await Activity.findByIdAndUpdate(
       id,
       { title, description, date },
-      { new: true } // Devuelve el documento actualizado
+      { new: true } // Returns the updated document
     );
 
     if (!updatedActivity) {
@@ -44,7 +44,7 @@ app.put('/api/activities/:id', async (req, res) => {
   }
 });
 
-// Iniciar el servidor
+// Start the server
 app.listen(port, () => {
   console.log(`update-service-Planner running on port ${port}`);
 });

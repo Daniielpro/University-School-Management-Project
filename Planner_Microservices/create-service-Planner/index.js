@@ -10,22 +10,22 @@ const port = process.env.PORT || 3001;
 // Middleware
 app.use(bodyParser.json());
 
-// Conexión a MongoDB
+// Connecting to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Ruta para crear una actividad
+// Path to create an activity
 app.post('/api/activities', async (req, res) => {
   try {
     const { title, description, date } = req.body;
 
-    // Validar datos
+    // Validate data
     if (!title || !description || !date) {
       return res.status(400).json({ error: 'All fields are required: title, description, date' });
     }
 
-    // Crear actividad
+    // Create activity
     const newActivity = new Activity({ title, description, date });
     const savedActivity = await newActivity.save();
 
@@ -36,7 +36,7 @@ app.post('/api/activities', async (req, res) => {
   }
 });
 
-// Iniciar el servidor
+// Start the server
 app.listen(port, () => {
   console.log(`create-service-Planner running on port ${port}`);
 });

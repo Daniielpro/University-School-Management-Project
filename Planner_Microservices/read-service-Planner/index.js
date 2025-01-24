@@ -6,7 +6,7 @@ const Activity = require('./models/activity');
 const app = express();
 const port = process.env.PORT || 3002;
 
-// Conexión a MongoDB
+// Connecting to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
@@ -22,7 +22,7 @@ app.get('/api/activities', async (req, res) => {
   }
 });
 
-// Ruta para buscar actividades por título o descripción
+// Path to search for activities by title or description
 app.get('/api/activities/search', async (req, res) => {
   try {
     const { query } = req.query;
@@ -31,10 +31,10 @@ app.get('/api/activities/search', async (req, res) => {
       return res.status(400).json({ error: 'Query parameter is required' });
     }
 
-    // Buscar actividades por título o descripción
+    // Search activities by title or description
     const activities = await Activity.find({
       $or: [
-        { title: { $regex: query, $options: 'i' } }, // Búsqueda insensible a mayúsculas
+        { title: { $regex: query, $options: 'i' } }, 
         { description: { $regex: query, $options: 'i' } }
       ]
     });
@@ -46,7 +46,7 @@ app.get('/api/activities/search', async (req, res) => {
   }
 });
 
-// Iniciar el servidor
+// Start the server
 app.listen(port, () => {
   console.log(`read-service-Planner running on port ${port}`);
 });
