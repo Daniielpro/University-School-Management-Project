@@ -9,5 +9,5 @@ class ConfigMicroserviceApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
+ 
 }
