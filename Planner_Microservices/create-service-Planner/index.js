@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const Activity = require('./models/activity');
 
 const app = express();
-const port = process.env.PORT || 3001; 
+const port = process.env.PORT || 3001;  
 
 // Middleware
 app.use(bodyParser.json());
