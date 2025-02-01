@@ -27,10 +27,12 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     # Paso 4: Construir y etiquetar la imagen Docker
-    - name: Build and Tag Docker Image
+    - name: Build Docker image
       run: |
-        docker build --label "commit_sha=${{ github.sha }}" -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest -f BACKEND/user-auth-microservices/Dockerfile .
-
+        docker build \
+          --label "commit_sha=${{ github.sha }}" \
+          -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest \
+          -f BACKEND/user-auth-microservices/Dockerfile .
     # Paso 5: Subir la imagen Docker al repositorio de Docker Hub
     - name: Push Docker Image
       run: |
