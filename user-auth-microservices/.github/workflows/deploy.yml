@@ -21,16 +21,15 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         
-
- # Construcción de la imagen Docker con la etiqueta 'latest'
+    # Construcción de la imagen Docker con la etiqueta 'latest'
     - name: Build Docker image
       run: |
-        docker build --label "commit_sha=${{ github.sha }}" -t cristinacolcha/mi-app:latest .
+        docker build --label "commit_sha=${{ github.sha }}" -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest .
 
     # Push de la imagen Docker a Docker Hub con la etiqueta 'latest'
     - name: Push Docker image to Docker Hub
       run: |
-        docker push cristinacolcha/user-auth-microservices:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
 
   deploy-aws:
     needs: build-and-push
@@ -68,4 +67,3 @@ jobs:
         sudo docker pull ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
         sudo docker run -d -p 8080:8080 --name user-auth-microservices ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
         EOF
- 
