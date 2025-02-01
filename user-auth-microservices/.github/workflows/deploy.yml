@@ -1,0 +1,70 @@
+name: Build and Push Docker Images QA
+
+on:
+    push:
+        branches:
+            - QA
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        
+
+ # Construcción de la imagen Docker con la etiqueta 'latest'
+    - name: Build Docker image
+      run: |
+        docker build --label "commit_sha=${{ github.sha }}" -t cristinacolcha/mi-app:latest .
+
+    # Push de la imagen Docker a Docker Hub con la etiqueta 'latest'
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker push cristinacolcha/user-auth-microservices:latest
+
+  deploy-aws:
+    needs: build-and-push
+    runs-on: ubuntu-latest 
+
+    steps:
+    - name: Set permissions for private key
+      run: |
+        echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
+        chmod 600 key.pem
+
+    # Update and configure the first instance
+    - name: Update system and install Docker (Instance 1)
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} << 'EOF'
+        sudo yum update -y
+        if ! command -v docker &> /dev/null
+        then
+          echo "Docker not found, installing..."
+          sudo yum install -y docker
+          sudo systemctl start docker
+          sudo systemctl enable docker
+        else
+          echo "Docker is already installed."
+        fi
+        sudo systemctl start docker
+        sudo systemctl enable docker
+        EOF
+
+    - name: Deploy Docker Container (Instance 1)
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} << 'EOF'
+        sudo docker stop user-auth-microservices || true
+        sudo docker rm user-auth-microservices || true
+        sudo docker pull ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
+        sudo docker run -d -p 8080:8080 --name user-auth-microservices ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
+        EOF
