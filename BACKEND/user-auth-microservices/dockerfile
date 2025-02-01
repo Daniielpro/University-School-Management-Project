@@ -1,0 +1,15 @@
+# Usa una imagen base oficial de Node.js
+FROM node:20
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copia los archivos del proyecto al contenedor
+COPY . .
+
+# Expone el puerto en el que el servidor se ejecutará
+EXPOSE 3000
+
+# Comando para ejecutar el servidor 
+CMD ["node", "app.js"]
+ 
