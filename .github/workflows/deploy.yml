@@ -64,5 +64,5 @@ jobs:
         sudo docker stop user-auth-microservices || true
         sudo docker rm user-auth-microservices || true
         sudo docker pull ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
-        sudo docker run -d -p 8080:8080 --name user-auth-microservices ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
+        sudo docker run -d -p 3000:3000 --name user-auth-microservices ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
         EOF
