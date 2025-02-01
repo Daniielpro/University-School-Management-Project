@@ -34,7 +34,7 @@ jobs:
       - name: Build Docker image
         run: |
          docker build \
-          --file BACKEND/user-auth-microservices/dockerfile \
+          --file BACKEND/user-auth-microservices/Dockerfile \
           --label "commit_sha=${{ github.sha }}" \
           -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest \
           .
