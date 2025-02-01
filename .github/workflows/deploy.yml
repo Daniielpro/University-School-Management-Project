@@ -46,7 +46,12 @@ jobs:
           echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
           chmod 600 key.pem
 
-      # Paso 2: Actualizar e instalar Docker en la instancia EC2 (Instancia 1)
+      # Paso 2: Transferir archivo .env a la instancia EC2
+      - name: Copy .env to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -i key.pem BACKEND/auth-user-microservice/.env ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }}:/home/ec2-user/.env
+
+      # Paso 3: Actualizar e instalar Docker en la instancia EC2 (Instancia 1)
       - name: Update system and install Docker (Instance 1)
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} << 'EOF'
@@ -64,7 +69,7 @@ jobs:
           sudo systemctl enable docker
           EOF
 
-      # Paso 3: Desplegar el contenedor Docker en la instancia EC2 (Instancia 1)
+      # Paso 4: Desplegar el contenedor Docker en la instancia EC2 (Instancia 1)
       - name: Deploy Docker Container (Instance 1)
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} << 'EOF'
@@ -74,6 +79,6 @@ jobs:
           sudo docker run -d \
             -p 3000:3000 \
             --name user-auth-microservices \
-            --env-file .env \
+            --env-file /home/ec2-user/.env \
             ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
           EOF
