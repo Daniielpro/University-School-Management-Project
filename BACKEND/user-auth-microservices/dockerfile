@@ -16,8 +16,5 @@ COPY . .
 # Exponer el puerto en el que corre la aplicación
 EXPOSE 3000
 
-# Variable de entorno para el entorno de producción
-ENV NODE_ENV=production
-
 # Comando para ejecutar la aplicación
 CMD ["node", "app.js"]
