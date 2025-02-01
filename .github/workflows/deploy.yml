@@ -23,7 +23,7 @@ jobs:
     # Construcción de la imagen Docker con la etiqueta 'latest'
     - name: Build Docker image
       run: |
-        docker build --label "commit_sha=${{ github.sha }}" -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest -f BACKEND/user-auth.microservice/Dockerfile .
+        docker build --label "commit_sha=${{ github.sha }}" -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest -f BACKEND/user-auth.microservices/Dockerfile .
 
     # Push de la imagen Docker a Docker Hub con la etiqueta 'latest'
     - name: Push Docker image to Docker Hub
