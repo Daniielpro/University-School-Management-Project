@@ -33,7 +33,7 @@ jobs:
       # Paso 4: Subir la imagen Docker a Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
-         docker build --label "commit_sha=${{ github.sha }}" -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest -f BACKEND/user-auth-microservices/Dockerfile .
+         docker build --label "commit_sha=${{ github.sha }}" -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest -f BACKEND/user-auth-microservices/dockerfile .
 
   deploy-aws:
     needs: build-and-push
