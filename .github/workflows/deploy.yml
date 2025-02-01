@@ -46,12 +46,7 @@ jobs:
           echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
           chmod 600 key.pem
 
-      # Paso 2: Transferir archivo .env a la instancia EC2
-      - name: Copy .env to EC2
-        run: |
-         scp -o StrictHostKeyChecking=no -i key.pem BACKEND/user-auth-microservices/.env ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }}:/home/ec2-user/.env
-    
-    
+   
       # Paso 3: Actualizar e instalar Docker en la instancia EC2 (Instancia 1)
       - name: Update system and install Docker (Instance 1)
         run: |
@@ -80,6 +75,9 @@ jobs:
           sudo docker run -d \
             -p 3000:3000 \
             --name user-auth-microservices \
-            --env-file /home/ec2-user/.env \
+            -e VAR1=value1 \
+            -e VAR2=value2 \
+            -e VAR3=value3 \
             ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
           EOF
+    
