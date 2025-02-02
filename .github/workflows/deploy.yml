@@ -43,20 +43,19 @@ jobs:
       # Paso 1: Configurar la clave privada para AWS EC2
       - name: Set permissions for private key
         run: |
-          echo "${{ secrets.AWS_EC2_KEY }}" > miclave.pem
-          chmod 600 miclave.pem
+          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
+          chmod 600 key.pem
 
-      # Paso 3: Actualizar e instalar Docker en la instancia EC2 (Instancia 1)
+      # Paso 2: Actualizar e instalar Docker en la instancia EC2 (Instancia 1)
       - name: Update system and install Docker (Instance 1)
         run: |
-          ssh -o StrictHostKeyChecking=no -i miclave.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo yum update -y"
-          ssh -o StrictHostKeyChecking=no -i miclave.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "if ! command -v docker &> /dev/null; then echo 'Docker not found, installing...'; sudo yum install -y docker; sudo systemctl start docker; sudo systemctl enable docker; else echo 'Docker is already installed.'; fi"
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo yum update -y"
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "if ! command -v docker &> /dev/null; then echo 'Docker not found, installing...'; sudo yum install -y docker; sudo systemctl start docker; sudo systemctl enable docker; else echo 'Docker is already installed.'; fi"
       
-      # Paso 4: Desplegar el contenedor Docker en la instancia EC2 (Instancia 1)
+      # Paso 3: Desplegar el contenedor Docker en la instancia EC2 (Instancia 1)
       - name: Deploy Docker Container (Instance 1)
         run: |
-          ssh -o StrictHostKeyChecking=no -i miclave.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker stop user-auth-microservices || true"
-          ssh -o StrictHostKeyChecking=no -i miclave.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker rm user-auth-microservices || true"
-          ssh -o StrictHostKeyChecking=no -i miclave.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest"
-          ssh -o StrictHostKeyChecking=no -i miclave.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker run -d -p 3000:3000 --name user-auth-microservices --env-file /home/ec2-user/.env ${{ secrets.DOCKER_USERNAME }}/user-auth
- 
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker stop user-auth-microservices || true"
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker rm user-auth-microservices || true"
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest"
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker run -d -p 3000:3000 --name user-auth-microservices -e DB_HOST=${{ secrets.DB_HOST }} -e DB_USER=${{ secrets.DB_USER }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_NAME=${{ secrets.DB_NAME }} ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest"
