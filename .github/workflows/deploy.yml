@@ -59,3 +59,4 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i miclave.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker rm user-auth-microservices || true"
           ssh -o StrictHostKeyChecking=no -i miclave.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest"
           ssh -o StrictHostKeyChecking=no -i miclave.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo docker run -d -p 3000:3000 --name user-auth-microservices --env-file /home/ec2-user/.env ${{ secrets.DOCKER_USERNAME }}/user-auth
+ 
