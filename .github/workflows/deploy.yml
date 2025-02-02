@@ -11,7 +11,7 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
-      # Paso 1: Checkout del código
+      # Paso 1: Checkout del código 
       - name: Checkout Code
         uses: actions/checkout@v3
 
