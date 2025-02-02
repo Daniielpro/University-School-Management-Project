@@ -30,7 +30,7 @@ jobs:
             --label "commit_sha=${{ github.sha }}" \
             -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest .
 
-      # Paso 4: Subir la imagen Docker a Docker Hub
+      # Paso 4: Subir la imagen Docker a Docker Hub 
       - name: Push Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
