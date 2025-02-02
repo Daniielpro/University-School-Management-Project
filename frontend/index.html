@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Fondo de la página con imagen a pantalla completa */
+        body {
+            background-image: url('fondo.png'); /* Usa la imagen subida */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+
+        /* Contenedor principal con fondo oscuro y borde redondeado */
+        .container {
+            background: rgba(0, 0, 0, 0.7); /* Fondo oscuro para mejorar la visibilidad del contenido */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); /* Agregar sombra suave alrededor del contenedor */
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        /* Estilos de los botones con efectos de transición */
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px; /* Botones con bordes redondeados */
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.1); /* Efecto de agrandamiento al pasar el cursor */
+        }
+
+        .btn:active {
+            transform: scale(1); /* Vuelve al tamaño normal cuando el botón se hace clic */
+        }
+        
+        /* Agregar animación de aparición del contenido */
+        .container {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Bienvenido a tu Ayudante Organizacional!</h1>
+        <p>Inicia sesión o regístrate para comenzar a organizar tu vida.</p>
+        <div class="buttons">
+            <a href="login.html" class="btn">Login</a>
+            <a href="register.html" class="btn">Register</a>
+        </div>
+    </div>
+
+    <script src="js/index.js"></script> <!-- Si tienes algún script adicional -->
+</body>
+</html>

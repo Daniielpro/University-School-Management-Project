@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger/swagger.json');
 const authRoutes = require('./auth/routes/authRoutes');
@@ -6,10 +7,15 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+// Define app first
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware
 app.use(express.json());
+
+// Servir archivos estáticos desde la carpeta 'frontend' fuera del directorio 'backend'
+app.use(express.static(path.join(__dirname, '../..', 'frontend'))); // Aseguramos que suba dos niveles para llegar a la raíz
 
 // Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -17,11 +23,14 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Auth routes
 app.use('/auth', authRoutes);
 
+// Ruta por defecto para servir 'index.html' desde 'frontend'
 app.get('/', (req, res) => {
-    res.send('Hello World!');
-  });
-  
+    const filePath = path.join(__dirname, '../..', 'frontend', 'index.html'); // Apuntamos a 'frontend' fuera del directorio 'backend'
+    console.log('Looking for index.html at:', filePath);  // Verifica la ruta
+    res.sendFile(filePath);
+});
 
+// Start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

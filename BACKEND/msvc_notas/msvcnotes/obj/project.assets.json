@@ -5183,27 +5183,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\stali\\.nuget\\packages\\": {}
+    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\stali\\Desktop\\microservicios_c#\\msvc_notas\\msvcnotes\\msvcnotes.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\Documents\\GitHub\\University-School-Management-Project\\BACKEND\\msvc_notas\\msvcnotes\\msvcnotes.csproj",
       "projectName": "msvcnotes",
-      "projectPath": "C:\\Users\\stali\\Desktop\\microservicios_c#\\msvc_notas\\msvcnotes\\msvcnotes.csproj",
-      "packagesPath": "C:\\Users\\stali\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\stali\\Desktop\\microservicios_c#\\msvc_notas\\msvcnotes\\obj\\",
+      "projectPath": "C:\\Users\\Usuario\\Documents\\GitHub\\University-School-Management-Project\\BACKEND\\msvc_notas\\msvcnotes\\msvcnotes.csproj",
+      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Usuario\\Documents\\GitHub\\University-School-Management-Project\\BACKEND\\msvc_notas\\msvcnotes\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\stali\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5271,7 +5268,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.405/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
+    "exam-reminder-service": "file:",
     "express": "^4.21.2",
     "mysql2": "^3.12.0",
     "swagger-jsdoc": "^6.2.8",
