@@ -63,7 +63,7 @@ jobs:
           fi
           sudo systemctl start docker
           sudo systemctl enable docker
-          EOF
+          EOF 
 
       # Paso 4: Desplegar el contenedor Docker en la instancia EC2 (Instancia 1)
       - name: Deploy Docker Container (Instance 1)
