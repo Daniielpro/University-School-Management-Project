@@ -49,8 +49,9 @@ jobs:
       # Paso 2: Subir el archivo .env a la instancia EC2
       - name: Upload .env to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i key.pem BACKEND/user-auth-microservices/.env ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }}:/home/ec2-user/.env
-
+         cd BACKEND/user-auth-microservices
+         scp -o StrictHostKeyChecking=no -i key.pem .env ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }}:/home/ec2-user/.env
+    
       # Paso 3: Actualizar e instalar Docker en la instancia EC2 (Instancia 1)
       - name: Update system and install Docker (Instance 1)
         run: |
