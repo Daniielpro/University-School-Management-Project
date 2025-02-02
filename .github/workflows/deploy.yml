@@ -75,9 +75,11 @@ jobs:
           sudo docker run -d \
             -p 3000:3000 \
             --name user-auth-microservices \
-            -e VAR1=value1 \
-            -e VAR2=value2 \
-            -e VAR3=value3 \
+            -e DB_HOST=${{ secrets.DB_HOST }} \
+            -e DB_USER=${{ secrets.DB_USER }} \
+            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -e DB_NAME=${{ secrets.DB_NAME }} \
             ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest
           EOF
+      
     
