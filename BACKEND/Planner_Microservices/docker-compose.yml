@@ -1,12 +1,68 @@
 version: '3.8'
 
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: sqlserver2019
-    ports:
-      - "1434:1433"
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "YourStrongPassword123!"
+  mongo:
+    image: mongo:latest
+    container_name: mongo_container
     restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - planner_network
+
+  planner-create:
+    build:
+      context: ./create-service-Planner
+      dockerfile: Dockerfile
+    image: planner-create:latest
+    container_name: planner-create
+    restart: always
+    depends_on:
+      - mongo
+    env_file:
+      - ./create-service-Planner/.env  
+    ports:
+      - "3001:3001"
+    networks:
+      - planner_network
+
+  planner-read:
+    build:
+      context: ./read-service-Planner
+      dockerfile: Dockerfile
+    image: planner-read:latest
+    container_name: planner-read
+    restart: always
+    depends_on:
+      - mongo
+    env_file:
+      - ./read-service-Planner/.env  
+    ports:
+      - "3002:3002"
+    networks:
+      - planner_network
+
+  planner-update:
+    build:
+      context: ./update-service-Planner
+      dockerfile: Dockerfile
+    image: planner-update:latest
+    container_name: planner-update
+    restart: always
+    depends_on:
+      - mongo
+    env_file:
+      - ./update-service-Planner/.env  
+    ports:
+      - "3003:3003"
+    networks:
+      - planner_network
+
+volumes:
+  mongo_data:
+
+networks:
+  planner_network:
+    driver: bridge
