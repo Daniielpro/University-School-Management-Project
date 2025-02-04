@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 
-// Servir archivos estáticos desde la carpeta 'frontend' fuera del directorio 'backend'
-app.use(express.static(path.join(__dirname, '../..', 'frontend'))); // Aseguramos que suba dos niveles para llegar a la raíz
+
+app.use(express.static(path.join(__dirname, '../..', 'frontend'))); 
 
 // Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -24,11 +24,15 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/auth', authRoutes);
 
 // Ruta por defecto para servir 'index.html' desde 'frontend'
+
+// Ruta por defecto para servir 'index.html' desde 'frontend'
 app.get('/', (req, res) => {
-    const filePath = path.join(__dirname, '../..', 'frontend', 'index.html'); // Apuntamos a 'frontend' fuera del directorio 'backend'
-    console.log('Looking for index.html at:', filePath);  // Verifica la ruta
+    const filePath = path.join(__dirname, '..', 'frontend', 'index.html'); // Ajustamos la ruta
+    console.log('Buscando index.html en:', filePath);  // Verifica la ruta
     res.sendFile(filePath);
 });
+
+
 
 // Start server
 app.listen(PORT, () => {

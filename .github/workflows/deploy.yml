@@ -2,7 +2,7 @@ name: Build, Push, and Deploy Docker Images (QA)
 
 on:
   push:
-    branches: [ "" ]
+    branches: [ "QA" ]
 
 jobs:
   build-and-push:
