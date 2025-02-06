@@ -1,9 +1,0 @@
-services:
-  notas-service:
-    build:
-      context: ./msvcnotes
-    ports:
-      - "8001:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=host.docker.internal;Database=Notas;User=sa;Password=1234;Encrypt=false;
