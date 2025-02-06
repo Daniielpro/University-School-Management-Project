@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 
-app.use(express.static(path.join(__dirname, '../..', 'frontend'))); 
+app.use(express.static(path.join(__dirname, 'frontend'))); 
 
 // Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -24,11 +24,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/auth', authRoutes);
 
 // Ruta por defecto para servir 'index.html' desde 'frontend'
-
-// Ruta por defecto para servir 'index.html' desde 'frontend'
 app.get('/', (req, res) => {
-    const filePath = path.join(__dirname, '..', 'frontend', 'index.html'); // Ajustamos la ruta
-    console.log('Buscando index.html en:', filePath);  // Verifica la ruta
+    const filePath = path.join(__dirname, 'frontend', 'index.html'); 
+    console.log('Buscando index.html en:', filePath); 
     res.sendFile(filePath);
 });
 

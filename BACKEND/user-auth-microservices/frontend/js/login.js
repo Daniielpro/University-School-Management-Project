@@ -16,8 +16,8 @@ document.getElementById('login-form').addEventListener('submit', async function 
 
     if (response.ok) {
         alert('Login successful');
-        localStorage.setItem("isAuthenticated", "true"); // Aquí se guarda la sesión
-        window.location.href = "dashboard.html"; // Asegúrate de que esta página exista
+        localStorage.setItem("isAuthenticated", "true");
+        window.location.href = "dashboard.html"; 
     } else {
         alert('Error: ' + result.error);
     }
