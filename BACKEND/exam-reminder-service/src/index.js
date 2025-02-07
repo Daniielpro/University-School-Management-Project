@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 const HOST = '0.0.0.0';
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Para procesar datos del formulario
+app.use(express.urlencoded({ extended: true })); 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Configurar EJS
