@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo_db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  save-link-service:
+    build: ./save-link-service
+    container_name: save-link-service
+    restart: always
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mongo
+    env_file:
+      - ./save-link-service/.env
+
+  delete-link-service:
+    build: ./delete-link-service
+    container_name: delete-link-service
+    restart: always
+    ports:
+      - "8086:8086"
+    depends_on:
+      - mongo
+    env_file:
+      - ./delete-link-service/.env
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "8087:8087"
+    depends_on:
+      - save-link-service
+      - delete-link-service
+
+volumes:
+  mongo_data:

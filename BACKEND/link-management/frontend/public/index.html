@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Links</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: white;
+            margin: 10px auto;
+            padding: 10px;
+            border-radius: 5px;
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            padding: 5px 10px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestor de Links</h1>
+    <form id="linkForm">
+        <input type="text" id="url" placeholder="URL" required>
+        <input type="text" id="description" placeholder="Descripción">
+        <button type="submit">Guardar Link</button>
+    </form>
+    
+    <h2>Lista de Links</h2>
+    <ul id="linkList"></ul>
+
+    <script>
+        document.getElementById('linkForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const url = document.getElementById('url').value;
+            const description = document.getElementById('description').value;
+
+            const response = await fetch('http://localhost:8085/api/links/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url, description }),
+            });
+
+            if (response.ok) {
+                alert('Link guardado');
+                loadLinks();
+            }
+        });
+
+        async function loadLinks() {
+            const response = await fetch('http://localhost:8085/api/links');
+            const links = await response.json();
+            const linkList = document.getElementById('linkList');
+            linkList.innerHTML = '';
+            
+            links.forEach(link => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${link.url} - ${link.description}</span>
+                    <button class="delete-btn" onclick="deleteLink('${link._id}')">Eliminar</button>`;
+                linkList.appendChild(li);
+            });
+        }
+
+        async function deleteLink(id) {
+            await fetch(`http://localhost:8086/api/links/delete/${id}`, {
+                method: 'DELETE'
+            });
+            alert('Link eliminado');
+            loadLinks();
+        }
+
+        document.addEventListener("DOMContentLoaded", loadLinks);
+    </script>
+</body>
+</html>
