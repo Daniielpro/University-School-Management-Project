@@ -27,7 +27,7 @@ This project is a **teacher management microservice** built with **Spring Boot a
 - **Containers:** Docker
 
 ## 🏗️ **Project Structure**
-
+```
 maestro-service/ 
 │── src/ │ 
  ├── main/ 
@@ -43,9 +43,7 @@ maestro-service/
 │── Dockerfile # Docker configuration 
 │── pom.xml # Maven dependencies 
 │── README.md # Project documentation
-
----
-
+```
 ## ⚡ **How to Clone and Set Up the Project**
 
 ### 🔹 **Clone from GitHub**

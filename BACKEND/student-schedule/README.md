@@ -30,7 +30,7 @@ This project is a **student schedule management system** built with **Go (Golang
 ---
 
 ## 🏗️ **Project Structure**
-
+```
 student-schedule/ 
 │── backend/ # Go-based backend with GraphQL 
 │ ├── graphql/ # GraphQL schema and resolvers
@@ -46,8 +46,7 @@ student-schedule/
 │ ├── Dockerfile 
 │ │── docker-compose.yml # Docker file to run all services 
 │── README.md # Project documentation
-
----
+```
 
 ## ⚡ **How to Clone and Set Up the Project**
 

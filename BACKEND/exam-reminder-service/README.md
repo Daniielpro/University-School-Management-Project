@@ -29,7 +29,7 @@ This project is an **exam reminder system** built with **Node.js and MySQL**, al
 ---
 
 ## 🏗️ **Project Structure**
-
+```
 exam-reminder-service/ 
 │── src/ 
 │ ├── config/ # Database configuration 
@@ -42,9 +42,7 @@ exam-reminder-service/
 │── .env # Environment variables 
 │── package.json # Dependencies 
 │── README.md # Project documentation
-
-
----
+```
 
 ## ⚡ **How to Clone and Set Up the Project**
 

@@ -28,6 +28,7 @@ This project is a **task management microservice** built with **Node.js, Express
 ---
 
 ## 🏗️ **Project Structure**
+```
 tasks-service/ 
 │── models/ # Mongoose models for MongoDB 
 │── controllers/ # Business logic for tasks 
@@ -38,9 +39,7 @@ tasks-service/
 │── Dockerfile # Docker configuration 
 │── package.json # Dependencies 
 │── README.md # Project documentation
-
-
----
+```
 
 ## ⚡ **How to Clone and Set Up the Project**
 
