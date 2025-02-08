@@ -5,23 +5,22 @@ import os
 
 # Configuración de la aplicación FastAPI
 app = FastAPI()
-
+WEBHOOK_URL = os.getenv("WEBHOOK_URL", "http://localhost:3030/webhook")
 # Configuración de CORS (permitiendo solicitudes desde los puertos 8001 y 8002)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8001", "http://localhost:8002"],  # Los orígenes permitidos
+    allow_origins=["*"], 
     allow_credentials=True,
-    allow_methods=["*"],  # Permitir todos los métodos HTTP
-    allow_headers=["*"],  # Permitir todos los headers
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
 
 # Configuración de la base de datos
-DB_USER = os.getenv('DB_USER', 'admin_user')
+DB_USER = os.getenv('DB_USER', 'postgres')
 DB_PASSWORD = os.getenv('DB_PASSWORD', '1751404730')
-DB_HOST = os.getenv('DB_HOST', 'localhost')
+DB_HOST = os.getenv('DB_HOST', 'database-2.crgu1k6u14fx.us-east-1.rds.amazonaws.com')
 DB_PORT = os.getenv('DB_PORT', '5432')
 DB_NAME = os.getenv('DB_NAME', 'gestion_horarios_db')
-
 # Conectar a la base de datos
 def get_db_connection():
     return psycopg2.connect(
@@ -30,6 +29,18 @@ def get_db_connection():
         user=DB_USER,
         password=DB_PASSWORD
     )
+# Función para verificar la conexión a la base de datos
+def check_db_connection():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT 1;")  # Hacer una consulta simple para verificar la conexión
+        cursor.close()
+        conn.close()
+        print("✅ Conexión a la base de datos exitosa!")
+    except Exception as e:
+        print(f"❌ Error de conexión a la base de datos: {e}")
+        raise Exception("Conexión a la base de datos fallida")
 
 # Endpoint para obtener todas las actividades
 @app.get("/activities/")
@@ -82,6 +93,8 @@ def get_activity(activity_id: int):
         conn.close()
 
 # Punto de entrada
+# Punto de entrada para ejecución directa
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8002)
+    PORT = int(os.getenv("PORT", 3022))
+    uvicorn.run(app, host="0.0.0.0", port=PORT)
