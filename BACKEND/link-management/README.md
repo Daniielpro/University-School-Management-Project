@@ -10,7 +10,22 @@ This project allows **storing, listing, and deleting links or repositories**. It
 ✅ **Run with Docker and `docker-compose`**  
 
 ---
+## 🏗️ **Arquitectura de Microservicios**
+| Servicio         | Puerto | Descripción |
+|-----------------|--------|-------------|
+| **MongoDB**     | `27017` | Base de datos para almacenar enlaces |
+| **Save Link Service**  | `8085`  | Servicio para guardar enlaces |
+| **Delete Link Service**  | `8086`  | Servicio para eliminar enlaces |
+| **Frontend**        | `8087`  | Interfaz web para gestionar enlaces |
 
+---
+## 🛠️ **Used Technologies**
+- **Backend:** Node.js, Express, MongoDB
+- **Frontend:** HTML, CSS, JavaScript
+- **Database:** MongoDB
+- **Containers:** Docker and Docker Compose
+
+---
 ## 🏗️ **Project Structure**
 ```
 link-management/

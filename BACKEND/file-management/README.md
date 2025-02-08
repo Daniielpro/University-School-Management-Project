@@ -10,6 +10,23 @@ This project is a **file management system** built with **microservices in Node.
 ✅ **Run with Docker and `docker-compose`**  
 
 ---
+## 🏗️ **Microservices Architecture**
+| Service | Port | Description |
+|-----------------|--------|-------------|
+| **MongoDB** | `27017` | Database to store file information |
+| **Upload Service** | `8088` | Manage file upload and storage |
+| **DeleteService** | `8089` | Allows you to delete files from the database and the server |
+| **Search Service** | `8090` | Provides an API to list and search files |
+| **Frontend** | `8091` | Web interface to manage files |
+
+---
+## 🛠️ **Used Technologies**
+- **Backend:** Node.js, Express, Multer, MongoDB
+- **Frontend:** HTML, CSS, JavaScript
+- **Database:** MongoDB
+- **Containers:** Docker and Docker Compose
+
+---
 
 ## 🏗️ **Project Structure**
 ```
