@@ -9,7 +9,7 @@ This project is an **exam reminder system** built with **Node.js and MySQL**, al
 ✅ **Web interface to view and manage reminders**  
 ✅ **Run with Docker and `docker-compose`**  
 
----
+--- 
 
 ## 🏗️ **Microservices Architecture**
 | Service | Port | Description |
