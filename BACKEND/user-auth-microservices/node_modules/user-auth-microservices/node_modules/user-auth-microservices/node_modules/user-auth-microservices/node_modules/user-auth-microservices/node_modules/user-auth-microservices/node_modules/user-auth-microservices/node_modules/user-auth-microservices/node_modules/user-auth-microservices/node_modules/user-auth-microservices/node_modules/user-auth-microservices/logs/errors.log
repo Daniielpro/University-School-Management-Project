@@ -1,0 +1,9 @@
+{"level":"error","message":"Error en registro: bcrypt is not defined","timestamp":"2025-02-08T17:39:25.434Z"}
+{"level":"error","message":"Error en registro: bcrypt is not defined","timestamp":"2025-02-08T17:39:50.754Z"}
+{"level":"error","message":"Error en registro: bcrypt is not defined","timestamp":"2025-02-08T17:40:58.616Z"}
+{"level":"error","message":"Error en registro: bcrypt is not defined","timestamp":"2025-02-08T17:41:13.232Z"}
+{"level":"error","message":"Error en registro: User is not defined","timestamp":"2025-02-08T17:42:26.929Z"}
+{"level":"error","message":"Error en registro: User is not defined","timestamp":"2025-02-08T17:42:35.451Z"}
+{"level":"error","message":"Error en login: read ECONNRESET","timestamp":"2025-02-08T17:44:35.899Z"}
+{"level":"error","message":"Error en login: jwt is not defined","timestamp":"2025-02-08T17:44:37.754Z"}
+{"level":"error","message":"Error en login: Invalid password","timestamp":"2025-02-08T20:30:23.951Z"}
