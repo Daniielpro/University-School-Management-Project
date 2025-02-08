@@ -1,0 +1,13 @@
+{
+  "name": "file-management",
+  "version": "1.0.0",
+  "description": "Gestión de archivos con microservicios",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd upload-service && node src/server.js\" \"cd delete-service && node src/server.js\" \"cd search-service && node src/server.js\" \"cd frontend && node server.js\""
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2",
+    "file-management": "file:"
+  }
+}

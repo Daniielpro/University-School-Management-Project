@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  upload-service:
+    build: ./upload-service
+    container_name: upload-service
+    ports:
+      - "8088:8088"
+    depends_on:
+      - mongo
+
+  delete-service:
+    build: ./delete-service
+    container_name: delete-service
+    ports:
+      - "8089:8089"
+    depends_on:
+      - mongo
+
+  search-service:
+    build: ./search-service
+    container_name: search-service
+    ports:
+      - "8090:8090"
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "8091:8091"
+    depends_on:
+      - upload-service
+      - delete-service
+      - search-service
+
+volumes:
+  mongo_data:

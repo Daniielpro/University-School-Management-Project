@@ -1,0 +1,20 @@
+{
+  "name": "upload-service",
+  "version": "1.0.0",
+  "description": "Microservicio para subir archivos (Excel, Word, PDF)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0",
+    "multer": "^1.4.5",
+    "dotenv": "^16.0.3",
+    "cors": "^2.8.5",
+    "swagger-ui-express": "^4.5.0",
+    "swagger-jsdoc": "^6.2.5"
+  }
+}
+
