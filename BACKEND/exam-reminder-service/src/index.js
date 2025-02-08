@@ -6,7 +6,7 @@ const swaggerDocs = require('./docs/swagger');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081
 const HOST = '0.0.0.0';
 
 app.use(express.json());
@@ -79,8 +79,8 @@ let lastDeletion = false;
     
     app.listen(PORT, HOST, () => {
         console.log(`🚀 Servidor corriendo en http://${HOST}:${PORT}`);
-        console.log('📄 Documentación en: http://localhost:8080/api-docs');
-        console.log('🖥 Vista en: http://localhost:8080/');
+        console.log('📄 Documentación en: http://localhost:8081/pi-docs');
+        console.log('🖥 Vista en: http://localhost:8081');
         console.log('⏳ Eliminación automática de recordatorios habilitada (cada 1 minuto)');
     });
 })();

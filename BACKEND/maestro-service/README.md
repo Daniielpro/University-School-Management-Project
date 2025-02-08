@@ -52,21 +52,21 @@ maestro-service/
 ```sh
   git clone https://github.com/your-repo/maestro-service.git
   cd maestro-service
+```
 
----
-🔹 Build and Run with Docker
+### 🔹 Build and Run with Docker
 ```sh
 mvn clean package
 docker build -t maestro-service .
 docker run -d -p 8083:8083 --name maestro-service maestro-service
+```
 
-----
-🔹 Run Locally
-
+### 🔹 Run Locally
+```sh
 mvn clean package
 java -jar target/maestro-service-*.jar
+```
 
-----
-📜 Author
-Developed by 🚀 Edwin Proaño and Cristina Colcha
+# 📜 **Author**
+Developed by 🚀 **Edwin Proañ and Cristina Colcha**
 

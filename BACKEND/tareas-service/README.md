@@ -48,17 +48,19 @@ tasks-service/
 ```sh
 git clone https://github.com/Daniielpro/University-School-Management-Project/tareas-service.git
 cd tareas-service
-
+```
 🔹 Run with Docker
 
+```sh
 docker build -t tareas-service .
 docker run -d -p 8084:8084 --name tareas-service tareas-service
-
+```
 🔹 Run Locally
 
+```sh
 npm install
 npm start
+```
 
-📜 Author
-
-Developed by 🚀 Edwin Proaño and Cristina Colcha
+# 📜 **Author**
+Developed by 🚀 **Edwin Proañ and Cristina Colcha**
