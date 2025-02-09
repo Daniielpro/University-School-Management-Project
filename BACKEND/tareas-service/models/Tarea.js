@@ -4,7 +4,7 @@ module.exports = (db) => {
     const TareaSchema = new mongoose.Schema({
         tarea: { type: String, required: true },
         fechaEntrega: { type: Date, required: true },
-        profesor: { type: String, required: true } // Guardaremos el nombre del profesor
+        profesor: { type: String, required: true } 
     });
 
     return db.model('Tarea', TareaSchema);

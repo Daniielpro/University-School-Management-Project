@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/userModel');  // ✅ Importa correctamente User
+const User = require('../models/userModel');  
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 

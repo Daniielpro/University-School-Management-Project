@@ -1,5 +1,5 @@
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') }); // Forzar la carga del .env
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') }); 
 const mongoose = require('mongoose');
 
 const connectDB = async () => {

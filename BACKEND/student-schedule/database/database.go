@@ -9,13 +9,13 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// Database representa la conexión a MongoDB
+
 type Database struct {
 	Client     *mongo.Client
 	Collection *mongo.Collection
 }
 
-// NewDatabase inicializa la conexión con MongoDB
+
 func NewDatabase(uri, dbName, collectionName string) *Database {
 	clientOptions := options.Client().ApplyURI(uri)
 

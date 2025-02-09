@@ -9,7 +9,7 @@ import (
 	"student-schedule/database"
 )
 
-// CreateEvent maneja la creación de un evento
+
 func CreateEvent(db *database.Database) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var event Event

@@ -3,7 +3,7 @@ const router = express.Router();
 const { maestrosDB } = require('../index');
 const Maestro = require('../models/Maestro')(maestrosDB);
 
-// Obtener todos los profesores
+
 router.get('/', async (req, res) => {
     try {
         const profesores = await Maestro.find();
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Obtener un profesor por ID
+
 router.get('/:id', async (req, res) => {
     try {
         const profesor = await Maestro.findById(req.params.id);
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Crear un nuevo profesor
+
 router.post('/', async (req, res) => {
     try {
         const { nombre, materia } = req.body;

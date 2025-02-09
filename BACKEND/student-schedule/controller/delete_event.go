@@ -10,7 +10,7 @@ import (
 	"student-schedule/database"
 )
 
-// DeleteEvent maneja la eliminación de un evento
+
 func DeleteEvent(db *database.Database) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id, _ := primitive.ObjectIDFromHex(c.Param("id"))

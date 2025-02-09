@@ -1,5 +1,5 @@
-const { maestrosDB } = require('../index');  // Importa la conexión correctamente
-const Maestro = require('../models/Maestro')(maestrosDB);  // Pasa la conexión al modelo
+const { maestrosDB } = require('../index');  
+const Maestro = require('../models/Maestro')(maestrosDB);  
 const TareaRepository = require('../repositories/tareaRepository');
 
 const obtenerTareas = async (req, res) => {
@@ -16,12 +16,12 @@ const crearTarea = async (req, res) => {
     try {
         const { tarea, fechaEntrega, profesor } = req.body;
 
-        // Validar si el nombre del profesor existe en maestrosDB
+        
         const profesorExiste = await Maestro.findOne({ nombre: profesor });
 
         if (!profesorExiste) return res.status(400).json({ error: 'El nombre del profesor no es válido' });
 
-        // Guardar la tarea con el nombre del profesor
+        
         const nuevaTarea = await TareaRepository.crearTarea({ tarea, fechaEntrega, profesor });
         res.status(201).json(nuevaTarea);
     } catch (error) {

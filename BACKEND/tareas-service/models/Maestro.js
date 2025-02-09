@@ -10,7 +10,7 @@ module.exports = (db) => {
         materia: { type: String, required: true }
     });
 
-    // Verifica si el modelo ya está registrado antes de crearlo
+    
     return db.models.Maestro || db.model('Maestro', MaestroSchema);
 };
 

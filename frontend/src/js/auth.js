@@ -16,7 +16,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     if (response.ok) {
         localStorage.setItem('token', data.token);
         alert('Inicio de sesión exitoso');
-        window.location.href = 'dashboard.html'; // Redirige al Dashboard
+        window.location.href = 'dashboard.html'; 
     } else {
         alert(`Error: ${data.error || 'Credenciales incorrectas'}`);
     }
@@ -44,7 +44,7 @@ document.getElementById('register-form')?.addEventListener('submit', async (e) =
     }
 });
 document.getElementById('logoutBtn')?.addEventListener('click', () => {
-    localStorage.removeItem('token');  // Eliminar el token
+    localStorage.removeItem('token'); 
     alert('Sesión cerrada correctamente');
-    window.location.href = 'login.html';  // Redirigir al login
+    window.location.href = 'login.html';  
 });

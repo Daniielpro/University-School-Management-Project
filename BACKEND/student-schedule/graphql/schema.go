@@ -11,7 +11,7 @@ import (
 	"student-schedule/database"
 )
 
-// Definir el tipo de dato Event
+
 var eventType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Event",
 	Fields: graphql.Fields{
@@ -23,7 +23,7 @@ var eventType = graphql.NewObject(graphql.ObjectConfig{
 	},
 })
 
-// Definir el esquema de GraphQL
+
 func NewSchema(db *database.Database) (graphql.Schema, error) {
 	return graphql.NewSchema(graphql.SchemaConfig{
 		Query:    queryRoot(db),
@@ -31,7 +31,7 @@ func NewSchema(db *database.Database) (graphql.Schema, error) {
 	})
 }
 
-// Definir las consultas disponibles en GraphQL
+
 func queryRoot(db *database.Database) *graphql.Object {
 	return graphql.NewObject(graphql.ObjectConfig{
 		Name: "Query",
@@ -54,7 +54,7 @@ func queryRoot(db *database.Database) *graphql.Object {
 							continue
 						}
 
-						// Convertir _id de ObjectID a string
+						
 						if id, ok := event["_id"].(primitive.ObjectID); ok {
 							event["id"] = id.Hex()
 						}
@@ -69,7 +69,7 @@ func queryRoot(db *database.Database) *graphql.Object {
 	})
 }
 
-// Definir las mutaciones disponibles en GraphQL
+
 func mutationRoot(db *database.Database) *graphql.Object {
 	return graphql.NewObject(graphql.ObjectConfig{
 		Name: "Mutation",
@@ -95,7 +95,7 @@ func mutationRoot(db *database.Database) *graphql.Object {
 						return nil, err
 					}
 
-					// Convertir `_id` a `id`
+					
 					event["id"] = event["_id"].(primitive.ObjectID).Hex()
 					delete(event, "_id")
 

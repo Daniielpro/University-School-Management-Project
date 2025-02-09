@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/graphql"; // Ahora usamos GraphQL
+const API_URL = "http://localhost:8080/graphql"; 
 
 document.addEventListener("DOMContentLoaded", loadEvents);
 
@@ -19,7 +19,7 @@ document.getElementById("event-form").addEventListener("submit", function (e) {
     }
 });
 
-// ✅ Cargar eventos en la tabla usando GraphQL
+
 function loadEvents() {
     fetch(API_URL, {
         method: "POST",
@@ -68,7 +68,7 @@ function loadEvents() {
     .catch(error => console.error("❌ Error cargando eventos:", error));
 }
 
-// ✅ Crear evento usando GraphQL
+
 function createEvent(eventData) {
     fetch(API_URL, {
         method: "POST",
@@ -96,7 +96,7 @@ function createEvent(eventData) {
     .catch(error => console.error("❌ Error creando evento:", error));
 }
 
-// ✅ Actualizar evento usando GraphQL
+
 function updateEvent(id, eventData) {
     if (!id) {
         console.error("🚨 Error: ID del evento es nulo.");
@@ -133,7 +133,7 @@ function updateEvent(id, eventData) {
     .catch(error => console.error("❌ Error actualizando evento:", error));
 }
 
-// ✅ Cargar datos al formulario para editar
+
 function editEvent(id, title, description, date, time) {
     console.log(`✏️ Editando evento con ID: ${id}`);
     document.getElementById("event-id").value = id;
@@ -143,7 +143,7 @@ function editEvent(id, title, description, date, time) {
     document.getElementById("time").value = time;
 }
 
-// ✅ Eliminar evento usando GraphQL
+
 function deleteEvent(id) {
     if (!id) {
         console.error("🚨 Error: ID del evento es nulo.");

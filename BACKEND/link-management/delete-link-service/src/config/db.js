@@ -1,11 +1,11 @@
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') }); // Asegura la carga del .env
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });  
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
         console.log("🔍 Cargando variables de entorno...");
-        console.log("🔍 MONGO_URI:", process.env.MONGO_URI); // Imprime para verificar
+        console.log("🔍 MONGO_URI:", process.env.MONGO_URI); 
 
         if (!process.env.MONGO_URI) {
             throw new Error("❌ La variable MONGO_URI no está definida en .env");

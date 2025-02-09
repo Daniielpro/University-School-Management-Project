@@ -8,11 +8,11 @@ exports.getFiles = async (req, res) => {
         const files = await File.find();
         const validFiles = [];
 
-        // 🔥 RUTA ABSOLUTA DIRECTA A `upload-service/src/uploads/`
+        
         const uploadServicePath = path.resolve(__dirname, '../../../upload-service/src/uploads');
 
         for (const file of files) {
-            // Construir la ruta correcta del archivo
+            
             const filePath = path.join(uploadServicePath, file.filename);
 
             console.log(`🔍 Buscando archivo en ruta corregida: ${filePath}`);

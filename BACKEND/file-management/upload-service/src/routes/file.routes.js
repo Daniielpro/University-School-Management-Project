@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { uploadFile } = require('../controllers/file.controller');
-const upload = require('../config/multer'); // Importar la configuración de Multer
+const upload = require('../config/multer'); 
 
 router.post('/upload', upload.single('file'), uploadFile);
 

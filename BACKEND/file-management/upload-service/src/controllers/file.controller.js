@@ -7,9 +7,9 @@ exports.uploadFile = async (req, res) => {
             return res.status(400).json({ message: "No se ha subido ningún archivo" });
         }
 
-        // Obtener el nombre del archivo generado por Multer
+        
         const { filename, mimetype, size } = req.file;
-        const filePath = `uploads/${filename}`; // Ruta relativa correcta
+        const filePath = `uploads/${filename}`; 
 
         console.log("📂 Guardando archivo en MongoDB:", filename);
 

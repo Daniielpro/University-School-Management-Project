@@ -15,7 +15,7 @@ class User {
     }
 
     static async getAllUsers() {
-        const [rows] = await db.query('SELECT id, username, email FROM users'); // No devolver la contraseña
+        const [rows] = await db.query('SELECT id, username, email FROM users'); 
         return rows;
     }
 }

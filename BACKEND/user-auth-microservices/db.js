@@ -15,7 +15,7 @@ const pool = mysql.createPool({
 pool.getConnection((err, connection) => {
     if (err) {
         console.error('Error en la conexión a la base de datos:', err);
-        setTimeout(() => process.exit(1), 5000); // Reiniciar en caso de error
+        setTimeout(() => process.exit(1), 5000); 
     } else {
         console.log('Conexión a la base de datos establecida');
         connection.release();

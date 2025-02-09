@@ -5,28 +5,28 @@ import psycopg2
 import os
 import requests
 
-# Configuración de la base de datos desde variables de entorno
+
 DB_USER = os.getenv('DB_USER', 'postgres')
 DB_PASSWORD = os.getenv('DB_PASSWORD', '1751404730')
 DB_HOST = os.getenv('DB_HOST', 'database-2.crgu1k6u14fx.us-east-1.rds.amazonaws.com')
 DB_PORT = os.getenv('DB_PORT', '5432')
 DB_NAME = os.getenv('DB_NAME', 'gestion_horarios_db')
 WEBHOOK_URL = os.getenv("WEBHOOK_URL", "http://localhost:3030/webhook")
-PORT = int(os.getenv("PORT", 3024))  # Puerto configurable para el servicio
+PORT = int(os.getenv("PORT", 3024))  
 
-# Inicializar la aplicación FastAPI
+
 app = FastAPI()
 
-# Configuración de CORS (puedes agregar más orígenes si es necesario)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Los orígenes permitidos
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Modelo de datos para actualización de actividad
+
 class ActivityUpdate(BaseModel):
     title: str
     description: str
@@ -34,22 +34,22 @@ class ActivityUpdate(BaseModel):
     start_time: str
     end_time: str
 
-# Función para conectar con la base de datos
+
 def get_db_connection():
     return psycopg2.connect(
         host=DB_HOST,
         database=DB_NAME,
         user=DB_USER,
         password=DB_PASSWORD,
-        port=DB_PORT  # Se añade el puerto de PostgreSQL
+        port=DB_PORT  
     )
 
-# Función para verificar la conexión a la base de datos
+
 def check_db_connection():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT 1;")  # Hacer una consulta simple para verificar la conexión
+        cursor.execute("SELECT 1;")  
         cursor.close()
         conn.close()
         print("✅ Conexión a la base de datos exitosa!")
@@ -57,7 +57,7 @@ def check_db_connection():
         print(f"❌ Error de conexión a la base de datos: {e}")
         raise Exception("Conexión a la base de datos fallida")
 
-# Función para enviar webhooks
+
 def send_webhook(event_type, data):
     try:
         response = requests.post(WEBHOOK_URL, json={"event_type": event_type, "data": data})
@@ -66,7 +66,7 @@ def send_webhook(event_type, data):
     except requests.exceptions.RequestException as e:
         print(f"❌ Error enviando webhook: {e}")
 
-# Endpoint para actualizar una actividad
+
 @app.put("/activities/{activity_id}")
 def update_activity(activity_id: int, activity: ActivityUpdate):
     conn = get_db_connection()
@@ -100,9 +100,9 @@ def update_activity(activity_id: int, activity: ActivityUpdate):
         cursor.close()
         conn.close()
 
-# Punto de entrada para ejecución directa
+
 if __name__ == "__main__":
     print("Verificando conexión a la base de datos...")
-    check_db_connection()  # Verificar conexión antes de arrancar el servidor
+    check_db_connection()  
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=PORT)

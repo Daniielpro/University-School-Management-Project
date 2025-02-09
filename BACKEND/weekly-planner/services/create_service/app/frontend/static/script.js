@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadActivities();
 });
 
-// Función para agregar actividad
+
 async function addActivity() {
     const activity = {
         title: document.getElementById("title").value,
@@ -53,7 +53,7 @@ async function addActivity() {
     }
 }
 
-// Función para cargar actividades
+
 async function loadActivities() {
     try {
         const response = await fetch(API_BASE_URL_READ);
@@ -84,7 +84,7 @@ async function loadActivities() {
     }
 }
 
-// Función para eliminar actividad
+
 async function deleteActivity(id) {
     try {
         const response = await fetch(`${API_BASE_URL_DELETE}/${id}`, { method: "DELETE" });
@@ -99,7 +99,7 @@ async function deleteActivity(id) {
     }
 }
 
-// Función para cargar datos en el formulario de actualización
+
 async function editActivity(id) {
     try {
         const response = await fetch(`${API_BASE_URL_READ}/${id}`);
@@ -116,7 +116,7 @@ async function editActivity(id) {
     }
 }
 
-// Función para actualizar actividad
+
 async function updateActivity() {
     const activity = {
         id: document.getElementById("activity_id").value,
@@ -147,30 +147,30 @@ async function updateActivity() {
 }
 const socket = new WebSocket("ws://localhost:3030/ws");
 
-// Manejar la conexión abierta
+
 socket.onopen = () => {
     console.log("Conectado al WebSocket");
 };
 
-// Manejar mensajes recibidos
+
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
     console.log("📢 Notificación recibida:", data);
 
-    // Mostrar la notificación en la página
+    
     const notificationDiv = document.getElementById("notifications");
     const message = document.createElement("div");
     message.innerHTML = `<strong>${data.event}</strong>: ${data.data.title} actualizado`;
     message.classList.add("notification");
     notificationDiv.appendChild(message);
 
-    // Opción: Eliminar la notificación después de unos segundos
+    
     setTimeout(() => {
         notificationDiv.removeChild(message);
     }, 5000);
 };
 
-// Manejar errores
+
 socket.onerror = (error) => {
     console.error("Error en WebSocket:", error);
 };

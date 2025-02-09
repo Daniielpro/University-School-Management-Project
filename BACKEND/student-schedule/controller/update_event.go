@@ -10,7 +10,7 @@ import (
 	"student-schedule/database"
 )
 
-// UpdateEvent maneja la actualización de un evento
+
 func UpdateEvent(db *database.Database) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id, _ := primitive.ObjectIDFromHex(c.Param("id"))

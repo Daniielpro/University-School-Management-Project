@@ -22,7 +22,7 @@ async function deleteFile(id) {
 
     if (response.ok) {
         alert('Archivo eliminado');
-        loadFiles(); // Recargar la lista después de eliminar
+        loadFiles(); 
     } else {
         alert('Error al eliminar archivo');
     }

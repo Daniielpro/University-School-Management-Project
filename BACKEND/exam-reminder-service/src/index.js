@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// Configurar EJS
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -24,19 +24,19 @@ let lastDeletion = false;
     const db = await connectDB();
     app.use('/api', reminderRoutes(db));
     
-    // Ruta para mostrar la vista de recordatorios
+   
     app.get('/', async (req, res) => {
         try {
             const [reminders] = await db.execute('SELECT * FROM reminders ORDER BY exam_date ASC');
             res.render('index', { reminders, lastDeletedExam });
-            lastDeletedExam = null; // Limpiar el mensaje después de renderizar
+            lastDeletedExam = null; 
         } catch (error) {
             console.error('Error al obtener recordatorios:', error);
             res.status(500).send('Error interno del servidor');
         }
     });
     
-    // Ruta para agregar un nuevo recordatorio desde la vista
+    
     app.post('/add-reminder', async (req, res) => {
         try {
             const { exam_name, exam_date } = req.body;
@@ -44,20 +44,20 @@ let lastDeletion = false;
                 return res.status(400).send('Todos los campos son obligatorios.');
             }
             await db.execute('INSERT INTO reminders (exam_name, exam_date) VALUES (?, ?)', [exam_name, exam_date]);
-            res.redirect('/'); // Redirigir a la página principal después de agregar
+            res.redirect('/'); 
         } catch (error) {
             console.error('Error al agregar el recordatorio:', error);
             res.status(500).send('Error interno del servidor');
         }
     });
     
-    // Ruta para verificar si se eliminó un recordatorio
+    
     app.get('/check-deletion', (req, res) => {
         res.json({ deleted: lastDeletion });
-        lastDeletion = false; // Resetear el estado después de ser leído
+        lastDeletion = false; 
     });
 
-    // Función para eliminar recordatorios vencidos
+    
     const deleteExpiredReminders = async () => {
         try {
             const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
@@ -66,7 +66,7 @@ let lastDeletion = false;
             if (expiredReminders.length > 0) {
                 await db.execute('DELETE FROM reminders WHERE exam_date < ?', [now]);
                 lastDeletedExam = `Se eliminó el recordatorio "${expiredReminders[0].exam_name}" a las ${new Date().toLocaleTimeString()}`;
-                lastDeletion = true; // Indicar que hubo una eliminación
+                lastDeletion = true; 
                 console.log(`🗑 ${lastDeletedExam}`);
             }
         } catch (error) {
@@ -74,7 +74,7 @@ let lastDeletion = false;
         }
     };
     
-    // Ejecutar la eliminación de recordatorios vencidos cada minuto
+    
     setInterval(deleteExpiredReminders, 60 * 1000);
     
     app.listen(PORT, HOST, () => {

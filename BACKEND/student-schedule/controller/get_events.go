@@ -9,7 +9,7 @@ import (
 	"student-schedule/database"
 )
 
-// GetEvents maneja la obtención de todos los eventos
+
 func GetEvents(db *database.Database) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var events []Event

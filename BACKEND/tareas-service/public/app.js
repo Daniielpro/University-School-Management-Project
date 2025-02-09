@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const profesorSelect = document.getElementById("profesor");
     const tareasList = document.getElementById("tareas-list");
 
-    // Función para cargar los profesores en el select
+    
     function cargarProfesores() {
         fetch(`${apiUrl}/profesores`)
             .then(response => response.json())
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error al cargar profesores:", error));
     }
 
-    // Función para cargar las tareas
+    
     function cargarTareas() {
         fetch(`${apiUrl}/tareas`)
             .then(response => response.json())
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error al cargar tareas:", error));
     }
 
-    // Agregar una nueva tarea
+    
     tareaForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error al agregar tarea:", error));
     });
 
-    // Eliminar tarea
+    
     tareasList.addEventListener("click", function (event) {
         if (event.target.classList.contains("delete")) {
             const tareaId = event.target.dataset.id;
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Cargar profesores y tareas al inicio
+    
     cargarProfesores();
     cargarTareas();
 });

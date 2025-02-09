@@ -1,7 +1,7 @@
 import requests
 import os
 
-# Obtener la URL del webhook desde las variables de entorno
+
 WEBHOOK_URL = os.getenv("WEBHOOK_URL", "http://localhost:3030/webhook")  
 
 def send_webhook(event_type, data):
@@ -13,7 +13,7 @@ def send_webhook(event_type, data):
     except requests.exceptions.RequestException as e:
         print(f"❌ Error enviando webhook: {e}")
 
-# Ejemplo de envío de un webhook
+
 if __name__ == "__main__":
     test_data = {
         "id": 123,
