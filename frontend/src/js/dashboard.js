@@ -18,17 +18,50 @@ function loadService(service) {
 
     let serviceURL = "";
     switch (service) {
-        case "tasks":
-            serviceURL = "http://localhost:4000/"; // Suponiendo que las tareas están en este puerto
+        case "Exam-reminder":
+            serviceURL = "http://localhost:8081/"; // Suponiendo que las tareas están en este puerto
             break;
-        case "boards":
-            serviceURL = "http://localhost:5000/"; // Suponiendo que los tableros están en este puerto
+        case "File-management":
+            serviceURL = "http://localhost:8091/"; // Suponiendo que los tableros están en este puerto
             break;
-        case "calendar":
-            serviceURL = "http://localhost:6000/"; // Suponiendo que el calendario está aquí
+        case "link-management":
+            serviceURL = "http://localhost:8087/"; // Suponiendo que el calendario está aquí
             break;
         case "weekly-planner":
             serviceURL = "http://localhost:3020/";
+            break;
+        case "Exam-reminder":
+            serviceURL = "http://localhost:8081/"; // Suponiendo que las tareas están en este puerto
+            break;
+        case "File-management":
+            serviceURL = "http://localhost:8091/"; // Suponiendo que los tableros están en este puerto
+            break;
+        case "link-management":
+            serviceURL = "http://localhost:8087/"; // Suponiendo que el calendario está aquí
+            break;
+        case "weekly-planner":
+            serviceURL = "http://localhost:3020/";
+            break;
+        case "Exam-reminder":
+            serviceURL = "http://localhost:8081/"; // Suponiendo que las tareas están en este puerto
+            break;
+        case "File-management":
+            serviceURL = "http://localhost:8091/"; // Suponiendo que los tableros están en este puerto
+            break;
+        case "link-management":
+            serviceURL = "http://localhost:8087/"; // Suponiendo que el calendario está aquí
+            break;
+        case "weekly-planner":
+            serviceURL = "http://localhost:3020/";
+            break;
+        case "Teacher-service":
+            serviceURL = "http://localhost:8083/"; // Suponiendo que las tareas están en este puerto
+            break;
+        case "Student-schedule":
+            serviceURL = "http://localhost:8080/"; // Suponiendo que los tableros están en este puerto
+            break;
+        case "Tareas Service":
+            serviceURL = "http://localhost:8084/"; // Suponiendo que el calendario está aquí
             break;
         default:
             serviceURL = "";
