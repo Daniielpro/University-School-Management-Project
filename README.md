@@ -107,7 +107,7 @@ This project is designed to run on AWS EC2 using Docker. To deploy:
 
 ---
 ## 📜 **Authors**
-Developed by 🚀 **Edwin Proañ and Cristina Colcha**
+Developed by 🚀 **Edwin Proaño and Cristina Colcha**
 
 ---
 ## 📝 **Contributing**
