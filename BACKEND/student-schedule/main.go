@@ -11,7 +11,7 @@ import (
 
 func main() {
 	
-	db := database.NewDatabase("mongodb://localhost:27017", "student_schedule", "events")
+	db := database.NewDatabase("mongodb://admin:1751404730@98.82.9.250:27017/student_schedule?authSource=admin", "student_schedule", "events")
 
 	
 	schema, err := customGraphQL.NewSchema(db)

@@ -13,11 +13,11 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Conexión a MongoDB para tareasDB
-const tareasDB = mongoose.createConnection('mongodb://localhost:27017/tareasDB');
+const tareasDB = mongoose.createConnection('mongodb://admin:1751404730@98.82.9.250:27017/tareasDB?authSource=admin');
 console.log('✅ Conectado a tareasDB');
 
 // Conexión a MongoDB para maestrosDB
-const maestrosDB = mongoose.createConnection('mongodb://localhost:27017/maestrosDB');
+const maestrosDB = mongoose.createConnection('mongodb://admin:1751404730@98.82.9.250:27017/maestrosDB?authSource=admin');
 console.log('✅ Conectado a maestrosDB');
 
 // Exportar conexiones antes de importar otros módulos
