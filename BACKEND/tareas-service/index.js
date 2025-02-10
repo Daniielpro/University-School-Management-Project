@@ -12,26 +12,26 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// Conexión a MongoDB para tareasDB
+
 const tareasDB = mongoose.createConnection('mongodb://admin:1751404730@98.82.9.250:27017/tareasDB?authSource=admin');
 console.log('✅ Conectado a tareasDB');
 
-// Conexión a MongoDB para maestrosDB
+
 const maestrosDB = mongoose.createConnection('mongodb://admin:1751404730@98.82.9.250:27017/maestrosDB?authSource=admin');
 console.log('✅ Conectado a maestrosDB');
 
-// Exportar conexiones antes de importar otros módulos
+
 module.exports = { app, tareasDB, maestrosDB };
 
-// Importar rutas
+
 const tareaRoutes = require('./routes/tareaRoutes');
-const profesorRoutes = require('./routes/profesorRoutes'); // <-- Nuevo
+const profesorRoutes = require('./routes/profesorRoutes'); 
 
 app.use('/api/tareas', tareaRoutes);
-app.use('/api/profesores', profesorRoutes); // <-- Nuevo
+app.use('/api/profesores', profesorRoutes); 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Iniciar servidor
+
 app.listen(PORT, () => {
     console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
