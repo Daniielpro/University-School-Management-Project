@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Client</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculator</h1>
+        <input type="number" id="a" placeholder="Enter first number">
+        <input type="number" id="b" placeholder="Enter second number">
+        <div>
+            <button onclick="calculate('add')">Add</button>
+            <button onclick="calculate('subtract')">Subtract</button>
+            <button onclick="calculate('multiply')">Multiply</button>
+            <button onclick="calculate('divide')">Divide</button>
+        </div>
+        <div class="result" id="result"></div>
+        <h2>Operation History</h2>
+        <ul id="history"></ul>
+    </div>
+    <script>
+        const API_URL = 'http://54.157.254.45:3010';
+
+        async function calculate(operation) {
+            const a = document.getElementById('a').value;
+            const b = document.getElementById('b').value;
+            const response = await fetch(`${API_URL}/${operation}?a=${a}&b=${b}`);
+            const data = await response.json();
+            document.getElementById('result').innerText = `Result: ${data.result}`;
+            getHistory();
+        }
+
+        async function getHistory() {
+            const response = await fetch(`${API_URL}/history`);
+            const data = await response.json();
+            
+            console.log("Respuesta de /history:", data); // Depuración para ver la estructura real
+        
+            const historyElement = document.getElementById('history');
+            historyElement.innerHTML = '';
+        
+            // Verificamos si "operations" existe y es un array
+            if (Array.isArray(data.operations)) {  
+                data.operations.forEach(operation => {
+                    const listItem = document.createElement('li');
+                    listItem.innerText = `${operation.type} ${operation.a} and ${operation.b} = ${operation.result}`;
+                    historyElement.appendChild(listItem);
+                });
+            } else {
+                console.error("Error: La respuesta de la API no contiene un array 'operations'", data);
+            }
+        }
+      
+        
+
+        getHistory();
+    </script>
+</body>
+</html>
