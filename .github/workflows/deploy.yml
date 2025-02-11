@@ -2,7 +2,9 @@ name: Build, Push, and Deploy Docker Images (QA)
 
 on:
   push:
-    branches: [ "QA" ] 
+    branches: [ "QA" ]
+    paths:
+      - "BACKEND/user-auth-microservices/**"  # Solo se ejecuta si hay cambios en esta carpeta
 
 jobs:
   build-and-push:
@@ -15,17 +17,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Paso 2: Login en Docker Hub
+      # Paso 2: Log in a Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Paso 3: Cambiar al directorio del Dockerfile y construir la imagen
+      # Paso 3: Construir la imagen Docker en la ruta específica
       - name: Build Docker image
         run: |
-          cd BACKEND/user-auth-microservices
+          cd BACKEND/user-auth-microservices  
           docker build \
             --label "commit_sha=${{ github.sha }}" \
             -t ${{ secrets.DOCKER_USERNAME }}/user-auth-microservices:latest .
@@ -51,7 +53,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "sudo yum update -y"
           ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} "if ! command -v docker &> /dev/null; then echo 'Docker not found, installing...'; sudo yum install -y docker; sudo systemctl start docker; sudo systemctl enable docker; else echo 'Docker is already installed.'; fi"
-      
+
       # Paso 3: Desplegar el contenedor Docker en la instancia EC2 (Instancia 1)
       - name: Deploy Docker Container (Instance 1)
         run: |
