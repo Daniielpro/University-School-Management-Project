@@ -7,21 +7,21 @@ on:
       - "BACKEND/Calculadora/**"
       - "BACKEND/exam-reminder-service/**"
       - "BACKEND/file-management/delete-service/**"
-      - "BACKEND/file-management/frontend**"
-      - "BACKEND/file-management/search-service**"
+      - "BACKEND/file-management/frontend/**"
+      - "BACKEND/file-management/search-service/**"
       - "BACKEND/file-management/upload-service/**"
       - "BACKEND/link-management/delete-link-service/**"
-      - "BACKEND/link-management/frontend**"
-      - "BACKEND//link-management/save-link-service/**"
-      - "BACKEND/maestro-service**"
+      - "BACKEND/link-management/frontend/**"
+      - "BACKEND/link-management/save-link-service/**"
+      - "BACKEND/maestro-service/**"
       - "BACKEND/tareas-service/**"     
       - "BACKEND/weekly-planner/services/create_service/**"  
       - "BACKEND/weekly-planner/services/delete_services/**"   
       - "BACKEND/weekly-planner/services/read_services/**"   
       - "BACKEND/weekly-planner/services/update_services/**"   
       - "BACKEND/weekly-planner/webhooks/**"   
-      - "BACKEND/user-auth-microservices**"  
-      - "frontend/**"   
+      - "BACKEND/user-auth-microservices/**"  
+      - "frontend/**" 
 
 jobs:
   check-paths:
@@ -32,17 +32,16 @@ jobs:
       wp_delete: ${{ steps.filter.outputs.wp_delete }}
       wp_read: ${{ steps.filter.outputs.wp_read }}
       wp_update: ${{ steps.filter.outputs.wp_update }}
-      wp-webhook: ${{ steps.filter.outputs.wpwebhook }}
-      exam-reminder: ${{ steps.filter.outputs.exam-reminder}}
-      fm-delete: ${{ steps.filter.outputs.fm-delete }}
-      fm-frontend: ${{ steps.filter.outputs.fm-frontend }}
-      fm-search: ${{ steps.filter.outputs.fm-search }}
-      fm-upload: ${{ steps.filter.outputs.fm-upload }}
-      lm-delete: ${{ steps.filter.outputs.lm-delete }}
-      lm-frontend: ${{ steps.filter.outputs.lm-frontend }}
-      lm-save: ${{ steps.filter.outputs.lm-save }}
+      wp_webhook: ${{ steps.filter.outputs.wp_webhook }}
+      exam_reminder: ${{ steps.filter.outputs.exam_reminder }}
+      fm_delete: ${{ steps.filter.outputs.fm_delete }}
+      fm_frontend: ${{ steps.filter.outputs.fm_frontend }}
+      fm_search: ${{ steps.filter.outputs.fm_search }}
+      fm_upload: ${{ steps.filter.outputs.fm_upload }}
+      lm_delete: ${{ steps.filter.outputs.lm_delete }}
+      lm_frontend: ${{ steps.filter.outputs.lm_frontend }}
+      lm_save: ${{ steps.filter.outputs.lm_save }}
       maestro: ${{ steps.filter.outputs.maestro }}
-      student: ${{ steps.filter.outputs.student }}
       tareas: ${{ steps.filter.outputs.tareas }}
       auth: ${{ steps.filter.outputs.auth }}
       frontend: ${{ steps.filter.outputs.frontend }}
@@ -50,11 +49,14 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # ✅ Asegura que se obtienen todos los cambios correctamente
 
       - name: Filter changes
         id: filter
         uses: dorny/paths-filter@v2
         with:
+          base: "HEAD^"  # ✅ Compara solo con el commit anterior
           filters: |
             calculadora:
               - "BACKEND/Calculadora/**"
@@ -71,31 +73,31 @@ jobs:
             wp_update:
               - "BACKEND/weekly-planner/services/update_services/**"
               - "!BACKEND/weekly-planner/services/update_services/node_modules/**"
-            wp-webhook:
+            wp_webhook:
               - "BACKEND/weekly-planner/webhooks/**"
               - "!BACKEND/weekly-planner/webhooks/node_modules/**"
-            exam-reminder:
+            exam_reminder:
               - "BACKEND/exam-reminder-service/**"
               - "!BACKEND/exam-reminder-service/node_modules/**"
-            fm-delete:
+            fm_delete:
               - "BACKEND/file-management/delete-service/**"
               - "!BACKEND/file-management/delete-service/node_modules/**"
-            fm-frontend:
+            fm_frontend:
               - "BACKEND/file-management/frontend/**"
               - "!BACKEND/file-management/frontend/node_modules/**"
-            fm-search:
+            fm_search:
               - "BACKEND/file-management/search-service/**"
               - "!BACKEND/file-management/search-service/node_modules/**"
-            fm-upload:
+            fm_upload:
               - "BACKEND/file-management/upload-service/**"
               - "!BACKEND/file-management/upload-service/node_modules/**"
-            lm-delete:
+            lm_delete:
               - "BACKEND/link-management/delete-link-service/**"
               - "!BACKEND/link-management/delete-link-service/node_modules/**"
-            lm-frontend:
+            lm_frontend:
               - "BACKEND/link-management/frontend/**"
               - "!BACKEND/link-management/frontend/node_modules/**"
-            lm-save:
+            lm_save:
               - "BACKEND/link-management/save-link-service/**"
               - "!BACKEND/link-management/save-link-service/node_modules/**"
             maestro:
@@ -110,10 +112,15 @@ jobs:
             frontend:
               - "frontend/**"
               - "!frontend/node_modules/**"
+
       - name: Debug Changed Files
         run: |
           echo "Detected changes in the following files:"
-          git diff --name-only origin/QA
+          git diff --name-only HEAD^
+
+      - name: Show Paths Filter Output
+        run: echo "${{ toJson(steps.filter.outputs) }}"
+
             
 # -------------------------------------CALCULADORA--------------------------------------------#
   build-and-push-Calculadora:
