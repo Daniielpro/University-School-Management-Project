@@ -14,14 +14,15 @@ on:
       - "BACKEND/link-management/frontend/**"
       - "BACKEND/link-management/save-link-service/**"
       - "BACKEND/maestro-service/**"
-      - "BACKEND/tareas-service/**"     
-      - "BACKEND/weekly-planner/services/create_service/**"  
-      - "BACKEND/weekly-planner/services/delete_services/**"   
-      - "BACKEND/weekly-planner/services/read_services/**"   
-      - "BACKEND/weekly-planner/services/update_services/**"   
-      - "BACKEND/weekly-planner/webhooks/**"   
-      - "BACKEND/user-auth-microservices/**"  
-      - "frontend/**"   
+      - "BACKEND/tareas-service/**"
+      - "BACKEND/weekly-planner/services/create_service/**"
+      - "BACKEND/weekly-planner/services/delete_services/**"
+      - "BACKEND/weekly-planner/services/read_services/**"
+      - "BACKEND/weekly-planner/services/update_services/**"
+      - "BACKEND/weekly-planner/webhooks/**"
+      - "BACKEND/user-auth-microservices/**"
+      - "frontend/**"
+
 jobs:
   check-paths:
     runs-on: ubuntu-latest
@@ -41,7 +42,6 @@ jobs:
       lm_frontend: ${{ steps.filter.outputs.lm_frontend }}
       lm_save: ${{ steps.filter.outputs.lm_save }}
       maestro: ${{ steps.filter.outputs.maestro }}
-      student: ${{ steps.filter.outputs.student }}
       tareas: ${{ steps.filter.outputs.tareas }}
       auth: ${{ steps.filter.outputs.auth }}
       frontend: ${{ steps.filter.outputs.frontend }}
@@ -55,8 +55,7 @@ jobs:
         uses: dorny/paths-filter@v2
         with:
           filters: |
-
-           ignore_node_modules:
+            ignore_node_modules:
               - "!**/node_modules/**"  # Ignora cualquier cambio en node_modules
             calculadora:
               - "BACKEND/Calculadora/**"
@@ -94,6 +93,7 @@ jobs:
               - "BACKEND/user-auth-microservices/**"
             frontend:
               - "frontend/**"
+
       - name: Debug Paths
         run: |
           echo "Detected paths: ${{ toJSON(steps.filter.outputs) }}"
@@ -101,10 +101,9 @@ jobs:
           echo "wp_create: ${{ steps.filter.outputs.wp_create }}"
           echo "wp_delete: ${{ steps.filter.outputs.wp_delete }}"
           echo "lm_delete: ${{ steps.filter.outputs.lm_delete }}"
+
       - name: Debug Changed Files
         run: git diff --name-only origin/main origin/QA
-  
-          # Agrega más variables de salida según sea necesario
 
 
 # -------------------------------------CALCULADORA--------------------------------------------#
