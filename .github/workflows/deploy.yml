@@ -49,16 +49,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # 🔥 Trae todo el historial de Git
-          ref: QA  # 🔥 Clona directamente la rama QA
-    
 
       - name: Filter changes
         id: filter
         uses: dorny/paths-filter@v2
         with:
-          base: "refs/remotes/origin/QA"  # ✅ Compara solo con el commit anterior
           filters: |
             calculadora:
               - "BACKEND/Calculadora/**"
@@ -119,9 +114,11 @@ jobs:
         run: |
           echo "Detected changes in the following files:"
           git diff --name-only HEAD^
-
+          
       - name: Show Paths Filter Output
-        run: echo "${{ toJson(steps.filter.outputs) }}"
+        run: |
+          echo "${{ toJson(steps.filter.outputs) }}"
+
 
             
 # -------------------------------------CALCULADORA--------------------------------------------#
