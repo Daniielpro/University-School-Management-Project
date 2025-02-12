@@ -10,7 +10,7 @@ RUN npm install
 
 # Copia el resto de los archivos
 COPY . .
- 
+  
 # Exponer el puerto
 EXPOSE 8085
 
