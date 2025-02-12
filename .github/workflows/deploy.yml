@@ -56,7 +56,7 @@ jobs:
         id: filter
         uses: dorny/paths-filter@v2
         with:
-          base: "HEAD~1"  # Cambia "main" por "HEAD~1" para comparar con el commit anterior
+          base: "HEAD^"  # Cambia "main" por "HEAD~1" para comparar con el commit anterior
           filters: |
             calculadora:
               - "BACKEND/Calculadora/**"
