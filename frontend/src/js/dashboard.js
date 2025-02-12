@@ -39,6 +39,12 @@ function loadService(service) {
         case "Tareas Service":
             serviceURL = "http://localhost:8084/"; 
             break;
+        case "Calculate":
+            serviceURL = "http://localhost:3010/"; 
+             break;
+         case "Academic-events":
+            serviceURL = "http://localhost:8097/"; 
+            break;        
         default:
             serviceURL = "";
     }
