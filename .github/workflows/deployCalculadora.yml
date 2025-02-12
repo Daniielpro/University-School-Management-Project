@@ -7,7 +7,7 @@ on:
       - "BACKEND/Calculadora/**"  # Cambios en esta carpeta activan el pipeline
 
 jobs:
-  build-and-push-wp-create:
+  build-and-push-wp-calculadora:
     runs-on: ubuntu-latest
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}

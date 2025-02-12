@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "BACKEND/Calculadora/**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/weekly-planner/services/read_services/**"  # Cambios en esta carpeta activan el pipeline
 
 jobs:
 
@@ -24,7 +24,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build Docker image
       run: |
-          cd weekly-planner/services/read_services/app 
+          cd BACKEND/weekly-planner/services/read_services/app 
           docker build \
             --label "commit_sha=${{ github.sha }}" \
             -t ${{ secrets.DOCKER_USERNAME }}/wpread-microservices:latest .
