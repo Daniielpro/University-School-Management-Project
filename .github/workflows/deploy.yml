@@ -7,20 +7,20 @@ on:
       - "BACKEND/Calculadora/**"
       - "BACKEND/exam-reminder-service/**"
       - "BACKEND/file-management/delete-service/**"
-      - "BACKEND/file-management/frontend**"
-      - "BACKEND/file-management/search-service**"
+      - "BACKEND/file-management/frontend/**"
+      - "BACKEND/file-management/search-service/**"
       - "BACKEND/file-management/upload-service/**"
       - "BACKEND/link-management/delete-link-service/**"
-      - "BACKEND/link-management/frontend**"
-      - "BACKEND//link-management/save-link-service/**"
-      - "BACKEND/maestro-service**"
+      - "BACKEND/link-management/frontend/**"
+      - "BACKEND/link-management/save-link-service/**"
+      - "BACKEND/maestro-service/**"
       - "BACKEND/tareas-service/**"     
       - "BACKEND/weekly-planner/services/create_service/**"  
       - "BACKEND/weekly-planner/services/delete_services/**"   
       - "BACKEND/weekly-planner/services/read_services/**"   
       - "BACKEND/weekly-planner/services/update_services/**"   
       - "BACKEND/weekly-planner/webhooks/**"   
-      - "BACKEND/user-auth-microservices**"  
+      - "BACKEND/user-auth-microservices/**"  
       - "frontend/**"   
 
 jobs:
@@ -32,15 +32,15 @@ jobs:
       wp_delete: ${{ steps.filter.outputs.wp_delete }}
       wp_read: ${{ steps.filter.outputs.wp_read }}
       wp_update: ${{ steps.filter.outputs.wp_update }}
-      wp-webhook: ${{ steps.filter.outputs.wpwebhook }}
-      exam-reminder: ${{ steps.filter.outputs.exam-reminder}}
-      fm-delete: ${{ steps.filter.outputs.fm-delete }}
-      fm-frontend: ${{ steps.filter.outputs.fm-frontend }}
-      fm-search: ${{ steps.filter.outputs.fm-search }}
-      fm-upload: ${{ steps.filter.outputs.fm-upload }}
-      lm-delete: ${{ steps.filter.outputs.lm-delete }}
-      lm-frontend: ${{ steps.filter.outputs.lm-frontend }}
-      lm-save: ${{ steps.filter.outputs.lm-save }}
+      wp_webhook: ${{ steps.filter.outputs.wp_webhook }}
+      exam_reminder: ${{ steps.filter.outputs.exam_reminder }}
+      fm_delete: ${{ steps.filter.outputs.fm_delete }}
+      fm_frontend: ${{ steps.filter.outputs.fm_frontend }}
+      fm_search: ${{ steps.filter.outputs.fm_search }}
+      fm_upload: ${{ steps.filter.outputs.fm_upload }}
+      lm_delete: ${{ steps.filter.outputs.lm_delete }}
+      lm_frontend: ${{ steps.filter.outputs.lm_frontend }}
+      lm_save: ${{ steps.filter.outputs.lm_save }}
       maestro: ${{ steps.filter.outputs.maestro }}
       student: ${{ steps.filter.outputs.student }}
       tareas: ${{ steps.filter.outputs.tareas }}
@@ -66,23 +66,23 @@ jobs:
               - "BACKEND/weekly-planner/services/read_services/**"
             wp_update:
               - "BACKEND/weekly-planner/services/update_services/**"
-            wp-webhook:
+            wp_webhook:
               - "BACKEND/weekly-planner/webhooks/**"
-            exam-reminder:
+            exam_reminder:
               - "BACKEND/exam-reminder-service/**"
-            fm-delete:
+            fm_delete:
               - "BACKEND/file-management/delete-service/**"
-            fm-frontend:
+            fm_frontend:
               - "BACKEND/file-management/frontend/**"
-            fm-search:
+            fm_search:
               - "BACKEND/file-management/search-service/**"
-            fm-upload:
+            fm_upload:
               - "BACKEND/file-management/upload-service/**"
-            lm-delete:
+            lm_delete:
               - "BACKEND/link-management/delete-link-service/**"
-            lm-frontend:
+            lm_frontend:
               - "BACKEND/link-management/frontend/**"
-            lm-save:
+            lm_save:
               - "BACKEND/link-management/save-link-service/**"
             maestro:
               - "BACKEND/maestro-service/**"
@@ -145,10 +145,17 @@ jobs:
           sudo docker stop calculator-microservices || true
           sudo docker rm calculator-microservices || true
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest
-          sudo docker run -d -p 3010:3010 --name calculator-microservices ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest
+          sudo docker run -d -p 3010:3010 \
+            --name calculator-microservices \
+            -e DB_HOST="${{ secrets.DB_HOST }}" \
+            -e DB_USER="${{ secrets.DB_USER }}" \
+            -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+            -e DB_NAME="${{ secrets.DB_NAME }}" \
+            ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest
           
           sudo docker ps -a
           EOF
+
 # -------------------------------------wekkly-planner--------------------------------------------#
 # -------------------------------------create--------------------------------------------#
   build-and-push-WP-create:
