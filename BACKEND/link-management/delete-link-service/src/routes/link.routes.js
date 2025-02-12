@@ -4,4 +4,4 @@ const { deleteLink } = require('../controllers/link.controller');
 
 router.delete('/delete/:id', deleteLink);
 
-module.exports = router;
+module.exports = router; 
