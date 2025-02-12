@@ -23,9 +23,9 @@ jobs:
         with:
           filters: |
             calculadora:
-              - "Calculadora/**"
+              - "BACKEND/Calculadora/**"
             wp_create:
-              - "weekly-planner/services/create_service/**"
+              - "BACKEND/weekly-planner/services/create_service/**"
   # -------------------------------------CALCULADORA--------------------------------------------#
   build-and-push-Calculadora:
     needs: check-paths
