@@ -7,21 +7,21 @@ on:
       - "BACKEND/Calculadora/**"
       - "BACKEND/exam-reminder-service/**"
       - "BACKEND/file-management/delete-service/**"
-      - "BACKEND/file-management/frontend/**"
-      - "BACKEND/file-management/search-service/**"
+      - "BACKEND/file-management/frontend**"
+      - "BACKEND/file-management/search-service**"
       - "BACKEND/file-management/upload-service/**"
       - "BACKEND/link-management/delete-link-service/**"
-      - "BACKEND/link-management/frontend/**"
-      - "BACKEND/link-management/save-link-service/**"
-      - "BACKEND/maestro-service/**"
+      - "BACKEND/link-management/frontend**"
+      - "BACKEND//link-management/save-link-service/**"
+      - "BACKEND/maestro-service**"
       - "BACKEND/tareas-service/**"     
       - "BACKEND/weekly-planner/services/create_service/**"  
       - "BACKEND/weekly-planner/services/delete_services/**"   
       - "BACKEND/weekly-planner/services/read_services/**"   
       - "BACKEND/weekly-planner/services/update_services/**"   
       - "BACKEND/weekly-planner/webhooks/**"   
-      - "BACKEND/user-auth-microservices/**"  
-      - "frontend/**"
+      - "BACKEND/user-auth-microservices**"  
+      - "frontend/**"   
 
 jobs:
   check-paths:
@@ -32,8 +32,8 @@ jobs:
       wp_delete: ${{ steps.filter.outputs.wp_delete }}
       wp_read: ${{ steps.filter.outputs.wp_read }}
       wp_update: ${{ steps.filter.outputs.wp_update }}
-      wp-webhook: ${{ steps.filter.outputs.wp-webhook }}
-      exam-reminder: ${{ steps.filter.outputs.exam-reminder }}
+      wp-webhook: ${{ steps.filter.outputs.wpwebhook }}
+      exam-reminder: ${{ steps.filter.outputs.exam-reminder}}
       fm-delete: ${{ steps.filter.outputs.fm-delete }}
       fm-frontend: ${{ steps.filter.outputs.fm-frontend }}
       fm-search: ${{ steps.filter.outputs.fm-search }}
@@ -42,6 +42,7 @@ jobs:
       lm-frontend: ${{ steps.filter.outputs.lm-frontend }}
       lm-save: ${{ steps.filter.outputs.lm-save }}
       maestro: ${{ steps.filter.outputs.maestro }}
+      student: ${{ steps.filter.outputs.student }}
       tareas: ${{ steps.filter.outputs.tareas }}
       auth: ${{ steps.filter.outputs.auth }}
       frontend: ${{ steps.filter.outputs.frontend }}
@@ -49,14 +50,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Trae todo el historial de commits
 
       - name: Filter changes
         id: filter
         uses: dorny/paths-filter@v2
         with:
-          base: "HEAD^"  # Cambia "main" por "HEAD~1" para comparar con el commit anterior
           filters: |
             calculadora:
               - "BACKEND/Calculadora/**"
@@ -112,8 +110,6 @@ jobs:
             frontend:
               - "frontend/**"
               - "!frontend/node_modules/**"
-      
-
 
 # -------------------------------------CALCULADORA--------------------------------------------#
   build-and-push-Calculadora:
