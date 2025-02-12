@@ -5,7 +5,7 @@ This project is a **file management system** built with **microservices in Node.
 ## 🚀 Features
 ✅ **Upload files** (PDF, Word, Excel)  
 ✅ **Delete files** (from MongoDB and filesystem)  
-✅ **Search files** in the database  
+✅ **Search files** in the database   
 ✅ **Web interface for file management**  
 ✅ **Run with Docker and `docker-compose`**  
 
