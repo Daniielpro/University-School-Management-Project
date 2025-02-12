@@ -2,26 +2,10 @@ name: Build, Push, and Deploy Docker Images (QA)
 
 on:
   push:
-    branches: [ "QA" ]
+    branches: [ "main" ]
     paths:
-      - "BACKEND/Calculadora/**"
-      - "BACKEND/exam-reminder-service/**"
-      - "BACKEND/file-management/delete-service/**"
-      - "BACKEND/file-management/frontend/**"
-      - "BACKEND/file-management/search-service/**"
-      - "BACKEND/file-management/upload-service/**"
-      - "BACKEND/link-management/delete-link-service/**"
-      - "BACKEND/link-management/frontend/**"
-      - "BACKEND/link-management/save-link-service/**"
-      - "BACKEND/maestro-service/**"
-      - "BACKEND/tareas-service/**"
-      - "BACKEND/weekly-planner/services/create_service/**"
-      - "BACKEND/weekly-planner/services/delete_services/**"
-      - "BACKEND/weekly-planner/services/read_services/**"
-      - "BACKEND/weekly-planner/services/update_services/**"
-      - "BACKEND/weekly-planner/webhooks/**"
-      - "BACKEND/user-auth-microservices/**"
-      - "frontend/**"
+      - "Calculadora/**"
+      - "weekly-planner/services/create_service/**"
 
 jobs:
   check-paths:
@@ -29,23 +13,6 @@ jobs:
     outputs:
       calculadora: ${{ steps.filter.outputs.calculadora }}
       wp_create: ${{ steps.filter.outputs.wp_create }}
-      wp_delete: ${{ steps.filter.outputs.wp_delete }}
-      wp_read: ${{ steps.filter.outputs.wp_read }}
-      wp_update: ${{ steps.filter.outputs.wp_update }}
-      wp_webhook: ${{ steps.filter.outputs.wp_webhook }}
-      exam_reminder: ${{ steps.filter.outputs.exam_reminder }}
-      fm_delete: ${{ steps.filter.outputs.fm_delete }}
-      fm_frontend: ${{ steps.filter.outputs.fm_frontend }}
-      fm_search: ${{ steps.filter.outputs.fm_search }}
-      fm_upload: ${{ steps.filter.outputs.fm_upload }}
-      lm_delete: ${{ steps.filter.outputs.lm_delete }}
-      lm_frontend: ${{ steps.filter.outputs.lm_frontend }}
-      lm_save: ${{ steps.filter.outputs.lm_save }}
-      maestro: ${{ steps.filter.outputs.maestro }}
-      tareas: ${{ steps.filter.outputs.tareas }}
-      auth: ${{ steps.filter.outputs.auth }}
-      frontend: ${{ steps.filter.outputs.frontend }}
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -55,59 +22,11 @@ jobs:
         uses: dorny/paths-filter@v2
         with:
           filters: |
-            ignore_node_modules:
-              - "!**/node_modules/**"  # Ignora cualquier cambio en node_modules
             calculadora:
-              - "BACKEND/Calculadora/**"
+              - "Calculadora/**"
             wp_create:
-              - "BACKEND/weekly-planner/services/create_service/**"
-            wp_delete:
-              - "BACKEND/weekly-planner/services/delete_services/**"
-            wp_read:
-              - "BACKEND/weekly-planner/services/read_services/**"
-            wp_update:
-              - "BACKEND/weekly-planner/services/update_services/**"
-            wp_webhook:
-              - "BACKEND/weekly-planner/webhooks/**"
-            exam_reminder:
-              - "BACKEND/exam-reminder-service/**"
-            fm_delete:
-              - "BACKEND/file-management/delete-service/**"
-            fm_frontend:
-              - "BACKEND/file-management/frontend/**"
-            fm_search:
-              - "BACKEND/file-management/search-service/**"
-            fm_upload:
-              - "BACKEND/file-management/upload-service/**"
-            lm_delete:
-              - "BACKEND/link-management/delete-link-service/**"
-            lm_frontend:
-              - "BACKEND/link-management/frontend/**"
-            lm_save:
-              - "BACKEND/link-management/save-link-service/**"
-            maestro:
-              - "BACKEND/maestro-service/**"
-            tareas:
-              - "BACKEND/tareas-service/**"
-            auth:
-              - "BACKEND/user-auth-microservices/**"
-            frontend:
-              - "frontend/**"
-
-      - name: Debug Paths
-        run: |
-          echo "Detected paths: ${{ toJSON(steps.filter.outputs) }}"
-          echo "calculadora: ${{ steps.filter.outputs.calculadora }}"
-          echo "wp_create: ${{ steps.filter.outputs.wp_create }}"
-          echo "wp_delete: ${{ steps.filter.outputs.wp_delete }}"
-          echo "lm_delete: ${{ steps.filter.outputs.lm_delete }}"
-
-      - name: Debug Changed Files
-        run: git diff --name-only origin/main origin/QA
-
-
-# -------------------------------------CALCULADORA--------------------------------------------#
-# -------------------------------------CALCULADORA--------------------------------------------#
+              - "weekly-planner/services/create_service/**"
+  # -------------------------------------CALCULADORA--------------------------------------------#
   build-and-push-Calculadora:
     needs: check-paths
     if: needs.check-paths.outputs.calculadora == 'true'
@@ -127,7 +46,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd BACKEND/Calculadora
+          cd Calculadora
           docker build \
             --label "commit_sha=${{ github.sha }}" \
             -t ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest .
@@ -148,7 +67,7 @@ jobs:
 
       - name: Deploy Docker Container on AWS
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M1 }} << EOF
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} << "EOF"
           sudo yum update -y
           if ! command -v docker &> /dev/null; then
             sudo yum install -y docker
@@ -163,11 +82,11 @@ jobs:
           
           sudo docker ps -a
           EOF
-# -------------------------------------LINK MANAGEMENT--------------------------------------------#
-# -------------------------------------lm-delete--------------------------------------------#
-  build-and-push-lm-delete:
+  # -------------------------------------wekkly-planner--------------------------------------------#
+    # -------------------------------------create--------------------------------------------#
+  build-and-push-WP-create:
     needs: check-paths
-    if: needs.check-paths.outputs.lm_delete == 'true'
+    if: needs.check-paths.outputs.wp_create == 'true'
     runs-on: ubuntu-latest
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -184,19 +103,19 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd BACKEND/file-management/delete-link-service 
+          cd weekly-planner/services/create_service/app 
           docker build \
             --label "commit_sha=${{ github.sha }}" \
-            -t ${{ secrets.DOCKER_USERNAME }}/lm-delete-microservices:latest .
+            -t ${{ secrets.DOCKER_USERNAME }}/wpcreate-microservices:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/lm-delete-microservices:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/wpcreate-microservices:latest
 
-  deploy-lm-delete:
-    needs: build-and-push-lm-delete
+  deploy-WP-create:
+    needs: build-and-push-WP-create
     runs-on: ubuntu-latest
-    if: needs.check-paths.outputs.lm_delete == 'true'
+    if: needs.check-paths.outputs.wp_create == 'true'
     steps:
       - name: Set permissions for private key
         run: |
@@ -205,130 +124,18 @@ jobs:
 
       - name: Deploy Docker Container on AWS
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M12 }} << "EOF"
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA2 }} << "EOF"
           sudo yum update -y
           if ! command -v docker &> /dev/null; then
             sudo yum install -y docker
           fi
           sudo systemctl start docker
           sudo systemctl enable docker
-
-          sudo docker stop lm-delete-microservices || true
-          sudo docker rm lm-delete-microservices || true
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lm-delete-microservices:latest
-          sudo docker run -d -p 8089:8089 --name lm-delete-microservices ${{ secrets.DOCKER_USERNAME }}/lm-delete-microservices:latest
-
-          sudo docker ps -a
-          EOF
-# -------------------------------------lm-frontend--------------------------------------------#
-  build-and-push-lm-frontend:
-    needs: check-paths
-    if: needs.check-paths.outputs.lm-frontend == 'true'
-    runs-on: ubuntu-latest
-    env:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build Docker image
-        run: |
-          cd BACKEND/file-management/frontend 
-          docker build \
-            --label "commit_sha=${{ github.sha }}" \
-            -t ${{ secrets.DOCKER_USERNAME }}/lm-frontend-microservices:latest .
-
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/lm-frontend-microservices:latest
-
-  deploy-lm-frontend:
-    needs: build-and-push-lm-frontend
-    runs-on: ubuntu-latest
-    if: needs.check-paths.outputs.lm-frontend == 'true'
-    steps:
-      - name: Set permissions for private key
-        run: |
-          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
-          chmod 600 key.pem
-
-      - name: Deploy Docker Container on AWS
-        run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M13 }} << "EOF"
-          sudo yum update -y
-          if ! command -v docker &> /dev/null; then
-            sudo yum install -y docker
-          fi
-          sudo systemctl start docker
-          sudo systemctl enable docker
-
-          sudo docker stop lm-frontend-microservices || true
-          sudo docker rm lm-frontend-microservices || true
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lm-frontend-microservices:latest
-          sudo docker run -d -p 8087:8087 --name lm-frontend-microservices ${{ secrets.DOCKER_USERNAME }}/lm-frontend-microservices:latest
-
-          sudo docker ps -a
-          EOF
-# -------------------------------------lm-save--------------------------------------------#
-  build-and-push-lm-save:
-    needs: check-paths
-    if: needs.check-paths.outputs.lm-save == 'true'
-    runs-on: ubuntu-latest
-    env:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build Docker image
-        run: |
-          cd BACKEND/file-management/save-link-service 
-          docker build \
-            --label "commit_sha=${{ github.sha }}" \
-            -t ${{ secrets.DOCKER_USERNAME }}/lm-save-microservices:latest .
-
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/lm-save-microservices:latest
-
-  deploy-lm-save:
-    needs: build-and-push-lm-save
-    runs-on: ubuntu-latest
-    if: needs.check-paths.outputs.lm-save == 'true'
-    steps:
-      - name: Set permissions for private key
-        run: |
-          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
-          chmod 600 key.pem
-
-      - name: Deploy Docker Container on AWS
-        run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M14 }} << "EOF"
-          sudo yum update -y
-          if ! command -v docker &> /dev/null; then
-            sudo yum install -y docker
-          fi
-          sudo systemctl start docker
-          sudo systemctl enable docker
-
-          sudo docker stop lm-save-microservices || true
-          sudo docker rm lm-save-microservices || true
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lm-save-microservices:latest
-          sudo docker run -d -p 8085:8085 --name lm-save-microservices ${{ secrets.DOCKER_USERNAME }}/lm-save-microservices:latest
-
+          
+          sudo docker stop wpcreate-microservices || true
+          sudo docker rm wpcreate-microservices || true
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/wpcreate-microservices:latest
+          sudo docker run -d -p 3020:3020 --name wpcreate-microservices ${{ secrets.DOCKER_USERNAME }}/wpcreate-microservices:latest
+          
           sudo docker ps -a
           EOF
