@@ -22,8 +22,6 @@ on:
       - "BACKEND/weekly-planner/webhooks/**"   
       - "BACKEND/user-auth-microservices/**"  
       - "frontend/**"
-    paths-ignore:
-      - "**/node_modules/**"
 
 jobs:
   check-paths:
