@@ -130,12 +130,12 @@ jobs:
     steps:
       - name: Set permissions for private key
         run: |
-          echo "${{ secrets.AWS_EC2_KEY_M1 }}" > key.pem
+          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
           chmod 600 key.pem
 
       - name: Deploy Docker Container on AWS
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M1 }} << "EOF"
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M1 }} << EOF
           sudo yum update -y
           if ! command -v docker &> /dev/null; then
             sudo yum install -y docker
@@ -148,5 +148,174 @@ jobs:
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest
           sudo docker run -d -p 3010:3010 --name calculator-microservices ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest
           
+          sudo docker ps -a
+          EOF
+# -------------------------------------LINK MANAGEMENT--------------------------------------------#
+# -------------------------------------lm-delete--------------------------------------------#
+  build-and-push-lm-delete:
+    needs: check-paths
+    if: needs.check-paths.outputs.lm-delete == 'true'
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: |
+          cd BACKEND/file-management/delete-link-service 
+          docker build \
+            --label "commit_sha=${{ github.sha }}" \
+            -t ${{ secrets.DOCKER_USERNAME }}/lm-delete-microservices:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/lm-delete-microservices:latest
+
+  deploy-lm-delete:
+    needs: build-and-push-lm-delete
+    runs-on: ubuntu-latest
+    if: needs.check-paths.outputs.lm-delete == 'true'
+    steps:
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy Docker Container on AWS
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M12 }} << "EOF"
+          sudo yum update -y
+          if ! command -v docker &> /dev/null; then
+            sudo yum install -y docker
+          fi
+          sudo systemctl start docker
+          sudo systemctl enable docker
+
+          sudo docker stop lm-delete-microservices || true
+          sudo docker rm lm-delete-microservices || true
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lm-delete-microservices:latest
+          sudo docker run -d -p 8089:8089 --name lm-delete-microservices ${{ secrets.DOCKER_USERNAME }}/lm-delete-microservices:latest
+
+          sudo docker ps -a
+          EOF
+# -------------------------------------lm-frontend--------------------------------------------#
+  build-and-push-lm-frontend:
+    needs: check-paths
+    if: needs.check-paths.outputs.lm-frontend == 'true'
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: |
+          cd BACKEND/file-management/frontend 
+          docker build \
+            --label "commit_sha=${{ github.sha }}" \
+            -t ${{ secrets.DOCKER_USERNAME }}/lm-frontend-microservices:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/lm-frontend-microservices:latest
+
+  deploy-lm-frontend:
+    needs: build-and-push-lm-frontend
+    runs-on: ubuntu-latest
+    if: needs.check-paths.outputs.lm-frontend == 'true'
+    steps:
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy Docker Container on AWS
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M13 }} << "EOF"
+          sudo yum update -y
+          if ! command -v docker &> /dev/null; then
+            sudo yum install -y docker
+          fi
+          sudo systemctl start docker
+          sudo systemctl enable docker
+
+          sudo docker stop lm-frontend-microservices || true
+          sudo docker rm lm-frontend-microservices || true
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lm-frontend-microservices:latest
+          sudo docker run -d -p 8087:8087 --name lm-frontend-microservices ${{ secrets.DOCKER_USERNAME }}/lm-frontend-microservices:latest
+
+          sudo docker ps -a
+          EOF
+# -------------------------------------lm-save--------------------------------------------#
+  build-and-push-lm-save:
+    needs: check-paths
+    if: needs.check-paths.outputs.lm-save == 'true'
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: |
+          cd BACKEND/file-management/save-link-service 
+          docker build \
+            --label "commit_sha=${{ github.sha }}" \
+            -t ${{ secrets.DOCKER_USERNAME }}/lm-save-microservices:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/lm-save-microservices:latest
+
+  deploy-lm-save:
+    needs: build-and-push-lm-save
+    runs-on: ubuntu-latest
+    if: needs.check-paths.outputs.lm-save == 'true'
+    steps:
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy Docker Container on AWS
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M14 }} << "EOF"
+          sudo yum update -y
+          if ! command -v docker &> /dev/null; then
+            sudo yum install -y docker
+          fi
+          sudo systemctl start docker
+          sudo systemctl enable docker
+
+          sudo docker stop lm-save-microservices || true
+          sudo docker rm lm-save-microservices || true
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lm-save-microservices:latest
+          sudo docker run -d -p 8085:8085 --name lm-save-microservices ${{ secrets.DOCKER_USERNAME }}/lm-save-microservices:latest
+
           sudo docker ps -a
           EOF
