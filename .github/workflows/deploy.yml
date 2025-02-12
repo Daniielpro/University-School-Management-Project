@@ -114,10 +114,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd BACKEND/Calculadora
-          docker build `
-            --label "commit_sha=${{ github.sha }}" `
-            -t ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest .
+            cd BACKEND/Calculadora
+            docker build \
+              --label "commit_sha=${{ github.sha }}" \
+              -t ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest .
+        
 
       - name: Push Docker image to Docker Hub
         run: |
