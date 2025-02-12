@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: Set permissions for private key
         run: |
-          echo "${{ secrets.AWS_EC2_KEY_M1 }}" > key.pem
+          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
           chmod 600 key.pem
 
       - name: Deploy Docker Container on AWS
