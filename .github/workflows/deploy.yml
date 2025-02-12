@@ -94,14 +94,14 @@ jobs:
               - "frontend/**"
 
 # -------------------------------------CALCULADORA--------------------------------------------#
-  # -------------------------------------CALCULADORA--------------------------------------------#
+
   build-and-push-Calculadora:
     needs: check-paths
     if: needs.check-paths.outputs.calculadora == 'true'
     runs-on: ubuntu-latest
     env:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAMEJ }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORDJ }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -109,44 +109,61 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAMEJ }}
+          password: ${{ secrets.DOCKER_PASSWORDJ }}
 
       - name: Build Docker image
         run: |
           cd BACKEND/Calculadora
-          docker build \
-            --label "commit_sha=${{ github.sha }}" \
-            -t ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest .
+          docker build `
+            --label "commit_sha=${{ github.sha }}" `
+            -t ${{ secrets.DOCKER_USERNAMEJ }}/calculator-microservices:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest
+          docker push ${{ secrets.DOCKER_USERNAMEJ }}/calculator-microservices:latest
 
   deploy-Calculadora:
     needs: build-and-push-Calculadora
     runs-on: ubuntu-latest
     if: needs.check-paths.outputs.calculadora == 'true'
     steps:
-      - name: Set permissions for private key
+      - name: Set up Plink for SSH Connection
         run: |
-          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
-          chmod 600 key.pem
+          echo "${{ secrets.AWS_EC2_KEYJ }}" > key.ppk
+          chmod 600 key.ppk
 
-      - name: Deploy Docker Container on AWS
+      - name: Deploy Docker Container on Windows Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_QA1 }} << "EOF"
-          sudo yum update -y
-          if ! command -v docker &> /dev/null; then
-            sudo yum install -y docker
-          fi
-          sudo systemctl start docker
-          sudo systemctl enable docker
-          
-          sudo docker stop calculator-microservices || true
-          sudo docker rm calculator-microservices || true
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest
-          sudo docker run -d -p 3010:3010 --name calculator-microservices ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest
-          
-          sudo docker ps -a
-          EOF
+          plink -ssh -i key.ppk ec2-user@${{ secrets.AWS_EC2_HOST_QA1J }} powershell -Command "& {
+            Write-Output 'Iniciando Despliegue en Windows...'
+
+            # Verificar si Docker está instalado
+            if (-Not (Get-Command docker -ErrorAction SilentlyContinue)) {
+              Write-Output 'Docker no está instalado. Instalando...'
+              Invoke-WebRequest -Uri https://download.docker.com/win/static/stable/x86_64/docker-20.10.7.zip -OutFile docker.zip
+              Expand-Archive -Path docker.zip -DestinationPath 'C:\Program Files\Docker\'
+              [System.Environment]::SetEnvironmentVariable('Path', $Env:Path + ';C:\Program Files\Docker', [System.EnvironmentVariableTarget]::Machine)
+            }
+
+            # Iniciar Docker
+            Start-Service Docker
+            Write-Output 'Docker Iniciado.'
+
+            # Descargar la nueva imagen
+            Write-Output 'Descargando imagen Docker...'
+            docker pull ${{ secrets.DOCKER_USERNAMEJ }}/calculator-microservices:latest
+
+            # Detener y eliminar contenedor anterior si existe
+            Write-Output 'Eliminando contenedor antiguo si existe...'
+            docker stop calculator-microservices -ErrorAction SilentlyContinue
+            docker rm calculator-microservices -ErrorAction SilentlyContinue
+
+            # Ejecutar el nuevo contenedor
+            Write-Output 'Ejecutando nuevo contenedor...'
+            docker run -d -p 3010:3010 --name calculator-microservices ${{ secrets.DOCKER_USERNAMEJ }}/calculator-microservices:latest
+
+            # Verificar el estado del contenedor
+            Write-Output 'Estado de contenedores:'
+            docker ps -a
+          }"
