@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const connectDB = async () => {
     try {
         console.log("🔍 Cargando variables de entorno...");
-        console.log("🔍 MONGO_URI:", process.env.MONGO_URI);
+        console.log("🔍 MONGO_URI:", process.env.MONGO_URI); 
 
         if (!process.env.MONGO_URI) {
             throw new Error("❌ La variable MONGO_URI no está definida en .env");
