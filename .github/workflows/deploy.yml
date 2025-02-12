@@ -50,9 +50,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # ✅ Obtiene todo el historial y evita problemas con referencias
-          ref: QA  # ✅ Asegura que la rama QA se revisa correctamente
-      # ✅ Asegura que se obtienen todos los cambios correctamente
+          fetch-depth: 0  # 🔥 Trae todo el historial de Git
+          ref: QA  # 🔥 Clona directamente la rama QA
+    
 
       - name: Filter changes
         id: filter
