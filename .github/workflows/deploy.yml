@@ -55,6 +55,9 @@ jobs:
         uses: dorny/paths-filter@v2
         with:
           filters: |
+
+           ignore_node_modules:
+              - "!**/node_modules/**"  # Ignora cualquier cambio en node_modules
             calculadora:
               - "BACKEND/Calculadora/**"
             wp_create:
