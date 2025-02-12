@@ -25,7 +25,7 @@ function loadService(service) {
             serviceURL = "http://localhost:8091/"; 
             break;
         case "link-management":
-            serviceURL = "http://localhost:8087/"; 
+            serviceURL = "http://54.175.232.102:8087/"; 
             break;
         case "weekly-planner":
             serviceURL = "http://localhost:3020/";
