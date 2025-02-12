@@ -10,7 +10,7 @@ on:
       - "BACKEND/file-management/frontend/**"
       - "BACKEND/file-management/search-service/**"
       - "BACKEND/file-management/upload-service/**"
-      - "BACKEND/link-management/delete-link-service/**"
+      - "BACKEND/file-management/delete-service**"
       - "BACKEND/link-management/frontend/**"
       - "BACKEND/link-management/save-link-service/**"
       - "BACKEND/maestro-service/**"
@@ -79,7 +79,7 @@ jobs:
             fm_upload:
               - "BACKEND/file-management/upload-service/**"
             lm_delete:
-              - "BACKEND/link-management/delete-link-service/**"
+              - "BACKEND/file-management/delete-service**"
             lm_frontend:
               - "BACKEND/link-management/frontend/**"
             lm_save:
