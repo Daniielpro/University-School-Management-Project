@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 app.use(express.static('public'));
 
-app.listen(8087, () => {
-    console.log('Frontend corriendo en http://localhost:8087');
-});
+const PORT = process.env.PORT || 8087;
+app.listen(PORT, () => {
+    console.log(`Frontend corriendo en http://localhost:${PORT}`); 
+}); 
