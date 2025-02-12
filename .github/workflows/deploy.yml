@@ -163,7 +163,7 @@ jobs:
 # -------------------------------------lm-delete--------------------------------------------#
   build-and-push-lm-delete:
     needs: check-paths
-    if: needs.check-paths.outputs.lm-delete == 'true'
+    if: needs.check-paths.outputs.lm_delete == 'true'
     runs-on: ubuntu-latest
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -192,7 +192,7 @@ jobs:
   deploy-lm-delete:
     needs: build-and-push-lm-delete
     runs-on: ubuntu-latest
-    if: needs.check-paths.outputs.lm-delete == 'true'
+    if: needs.check-paths.outputs.lm_delete == 'true'
     steps:
       - name: Set permissions for private key
         run: |

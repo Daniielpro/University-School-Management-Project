@@ -10,7 +10,7 @@ const connectDB = async () => {
         if (!process.env.MONGO_URI) {
             throw new Error("❌ La variable MONGO_URI no está definida en .env");
         }
-
+ 
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
