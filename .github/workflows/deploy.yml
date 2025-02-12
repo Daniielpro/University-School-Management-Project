@@ -4,8 +4,8 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "Calculadora/**"
-      - "weekly-planner/services/create_service/**"
+      - "BACKEND/Calculadora/**"
+      - "BACKEND/weekly-planner/services/create_service/**"
 
 jobs:
   check-paths:
