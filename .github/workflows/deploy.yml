@@ -2,7 +2,7 @@ name: Build, Push, and Deploy Docker Images (QA)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "QA" ]
     paths:
       - "Calculadora/**"
       - "weekly-planner/services/create_service/**"
