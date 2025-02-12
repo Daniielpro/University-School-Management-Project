@@ -7,7 +7,7 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
-    console.log('MongoDB connected to EC2');
+    console.log('MongoDB connected to EC2'); 
   } catch (error) {
     console.error('Error connecting to MongoDB', error);
     process.exit(1);
