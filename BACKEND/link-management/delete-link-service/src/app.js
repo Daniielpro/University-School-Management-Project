@@ -9,6 +9,6 @@ app.use(express.json());
 app.use(cors());
  
 connectDB();
-app.use('/api/links', linkRoutes);
+app.use('/api/links', linkRoutes); 
 
 module.exports = app; 
