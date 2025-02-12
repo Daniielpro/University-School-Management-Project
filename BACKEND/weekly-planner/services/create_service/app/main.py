@@ -7,7 +7,6 @@ import psycopg2
 import requests
 from fastapi.middleware.cors import CORSMiddleware 
 
-
 DB_USER = os.getenv('DB_USER', 'postgres')
 DB_PASSWORD = os.getenv('DB_PASSWORD', '1751404730')
 DB_HOST = os.getenv('DB_HOST', 'database-2.crgu1k6u14fx.us-east-1.rds.amazonaws.com')
