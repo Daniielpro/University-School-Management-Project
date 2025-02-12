@@ -220,7 +220,7 @@ app.get('/divide', async (req, res) => {
  *                   a:
  *                     type: number
  *                   b:
- *                     type: number
+ *                     type: number 
  *                   result:
  *                     type: number
  *                   createdAt: 
