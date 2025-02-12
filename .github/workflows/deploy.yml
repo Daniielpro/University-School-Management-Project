@@ -98,7 +98,9 @@ jobs:
           echo "wp_create: ${{ steps.filter.outputs.wp_create }}"
           echo "wp_delete: ${{ steps.filter.outputs.wp_delete }}"
           echo "lm_delete: ${{ steps.filter.outputs.lm_delete }}"
-
+      - name: Debug Changed Files
+        run: git diff --name-only origin/main origin/QA
+  
           # Agrega más variables de salida según sea necesario
 
 
