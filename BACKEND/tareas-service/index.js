@@ -13,11 +13,11 @@ app.use(express.json());
 app.use(express.static('public'));
 
 
-const tareasDB = mongoose.createConnection('mongodb://admin:1751404730@98.82.9.250:27017/tareasDB?authSource=admin');
+const tareasDB = mongoose.createConnection('mongodb://admin:1751404730@54.84.7.37:27017/tareasDB?authSource=admin');
 console.log('✅ Conectado a tareasDB');
 
 
-const maestrosDB = mongoose.createConnection('mongodb://admin:1751404730@98.82.9.250:27017/maestrosDB?authSource=admin');
+const maestrosDB = mongoose.createConnection('mongodb://admin:1751404730@54.84.7.37:27017/maestrosDB?authSource=admin');
 console.log('✅ Conectado a maestrosDB');
 
 
