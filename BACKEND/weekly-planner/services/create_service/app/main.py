@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 DB_USER = os.getenv('DB_USER', 'postgres')
 DB_PASSWORD = os.getenv('DB_PASSWORD', '1751404730')
 DB_HOST = os.getenv('DB_HOST', 'database-2.crgu1k6u14fx.us-east-1.rds.amazonaws.com')
-DB_PORT = os.getenv('DB_PORT', '5432')
+DB_PORT = os.getenv('DB_PORT', '5432') 
 DB_NAME = os.getenv('DB_NAME', 'gestion_horarios_db')
 WEBHOOK_URL = os.getenv("WEBHOOK_URL", "http://localhost:3030/webhook")
 

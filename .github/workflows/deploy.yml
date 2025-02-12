@@ -110,7 +110,11 @@ jobs:
             frontend:
               - "frontend/**"
               - "!frontend/node_modules/**"
-
+      - name: Debug Changed Files
+        run: |
+          echo "Detected changes in the following files:"
+          git diff --name-only origin/QA
+            
 # -------------------------------------CALCULADORA--------------------------------------------#
   build-and-push-Calculadora:
     needs: check-paths
