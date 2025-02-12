@@ -42,17 +42,9 @@ jobs:
           echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
           chmod 600 key.pem
 
-      - name: Debug SSH connection (Verificar si la clave está configurada correctamente)
-        run: |
-          echo "Verificando clave privada..."
-          ls -l key.pem
-          cat key.pem
-          echo "Probando conexión SSH..."
-          ssh -v -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_M2 }} echo "Conexión exitosa"
-
       - name: Deploy Docker Container on AWS
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_M2 }} << EOF
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M2 }} << EOF
           sudo yum update -y
           if ! command -v docker &> /dev/null; then
             sudo yum install -y docker
