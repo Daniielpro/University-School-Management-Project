@@ -1,0 +1,72 @@
+name: Build, Push, and Deploy Create Availability
+
+on:
+  push:
+    branches: [ "QA" ]
+    paths:
+      - "BACKEND/weekly-planner/services/create_service**"  # Cambios en esta carpeta activan el pipeline
+
+jobs:
+  build-and-push-wp-create:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with: 
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: |
+          cd BACKEND/weekly-planner/services/create_service/app 
+          docker build \
+            --label "commit_sha=${{ github.sha }}" \
+            -t ${{ secrets.DOCKER_USERNAME }}/wpcreate-microservices:latest .
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker push ${{ secrets.DOCKER_USERNAME }}/wpcreate-microservices:latest
+    - name: Push Docker image to Docker Hub
+      run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/calculator-microservices:latest
+
+  deploy-aws-wp-create:
+    runs-on: ubuntu-latest
+    needs: build-and-push-wp-create 
+    steps:
+      - name: Set permissions for private key
+        run: |
+          echo "${{ secrets.AWS_EC2_KEY_M1 }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy Docker Container on AWS
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M2 }} << "EOF"
+          sudo yum update -y
+          if ! command -v docker &> /dev/null; then
+            sudo yum install -y docker
+          fi
+          sudo systemctl start docker
+          sudo systemctl enable docker
+          
+          sudo docker stop wpcreate-microservices || true
+          sudo docker rm wpcreate-microservices || true
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/wpcreate-microservices:latest
+          sudo docker run -d -p 3020:3020 \
+            --name wpcreate-microservices \
+            -e DB_USER=${{ secrets.DB_USER }} \
+            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -e DB_HOST=${{ secrets.DB_HOST }} \
+            -e DB_PORT=${{ secrets.DB_PORT }} \
+            -e DB_NAME=${{ secrets.DB_NAME }} \
+            -e WEBHOOK_URL=${{ secrets.WEBHOOK_URL }} \
+            ${{ secrets.DOCKER_USERNAME }}/wpcreate-microservices:latest 
+            
+          sudo docker ps -a
+          EOF
