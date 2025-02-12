@@ -58,7 +58,7 @@ jobs:
         id: filter
         uses: dorny/paths-filter@v2
         with:
-          base:   # ✅ Compara solo con el commit anterior
+          base: "refs/remotes/origin/QA"  # ✅ Compara solo con el commit anterior
           filters: |
             calculadora:
               - "BACKEND/Calculadora/**"
