@@ -223,7 +223,7 @@ app.get('/divide', async (req, res) => {
  *                     type: number
  *                   result:
  *                     type: number
- *                   createdAt:
+ *                   createdAt: 
  *                     type: string
  *                     format: date-time
  */
