@@ -22,25 +22,26 @@ This project is a **school and university management system** based on microserv
 |----------|--------|-------------|
 | **PostgreSQL** | `5432` | Main database |
 | **MongoDB** | `27017` | Secondary database |
-| **User Service** | `3001` | User authentication service |
-| **Task Service** | `3002` | Task management service |
-| **Scheduler Service** | `3003` | Academic scheduling service |
-| **Exam Reminder Service** | `3004` | Exam reminder service |
-| **File Management Service** | `3005` | File upload and management service |
-| **Student Schedule Service** | `3006` | Student and teacher scheduling service |
-| **Evaluation Service** | `3007` | Academic performance evaluation service |
-| **Frontend** | `8080` | Web interface |
+| **User Service** | `3000` | User authentication service |
+| **Task Service** | `8084` | Task management service |
+| **academic-events** | `8097` |  |
+| **Scheduler Service** | `8080` | Academic scheduling service |
+| **Exam Reminder Service** | `8081` | Exam reminder service |
+| **File Management Service** | `8091` | File upload and management service |
+| **Link Service** | `8087` |  |
+| **weekly-planner** | `3020` |  |
+| **maestro-service** | `8083` | |
+| **Calculate** | `3010` |  |
+| **Frontend** | `5175` | Web interface |
 
 ---
 ## 🛠️ **Technologies Used**
-- **Backend:** Node.js, Express.js, Java (Spring Boot)
-- **Frontend:** HTML, CSS, JavaScript, React.js
-- **Databases:** PostgreSQL, MongoDB
+- **Backend:** Node.js, Express.js, Java (Spring Boot), Phyton, Javascript, GO.
+- **Frontend:** HTML, CSS, JavaScript.
+- **Databases:** PostgreSQL, MongoDB, MYSQL
 - **Containers:** Docker and Docker Compose
-- **Messaging and Events:** Amazon SQS, SNS
-- **Authentication and Security:** JWT, bcrypt
+- **Authentication and Security:** JWT
 - **Orchestration and Deployment:** AWS EC2, GitHub Actions
-- **External Integrations:** REST API for third-party systems
 
 ---
 ## 📂 **Project Structure**
@@ -88,32 +89,9 @@ npm start
 ```
 
 ---
-## 🌍 **Deployment on AWS**
-This project is designed to run on AWS EC2 using Docker. To deploy:
-1. **Build the image and push it to Docker Hub:**
-   ```sh
-   docker build -t user/microservice .
-   docker push user/microservice
-   ```
-2. **Connect to the EC2 instance:**
-   ```sh
-   ssh ec2-user@your-ec2-ip
-   ```
-3. **Run the containers on EC2:**
-   ```sh
-   docker run -d -p 3000:3000 user/microservice
-   ```
-4. **Automate updates with GitHub Actions.**
-
----
 ## 📜 **Authors**
 Developed by 🚀 **Edwin Proaño and Cristina Colcha**
 
----
-## 📝 **Contributing**
-Contributions are welcome. To contribute:
-1. Fork the repository.
-2. Create a new branch.
-3. Make changes and submit a Pull Request.
+
 
 
