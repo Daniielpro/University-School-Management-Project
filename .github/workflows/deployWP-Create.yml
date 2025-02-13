@@ -73,7 +73,7 @@ jobs:
           # Descargar y ejecutar el nuevo contenedor con la imagen correcta
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/wp-create-microservices:latest
           sudo docker run -d -p 3020:3020 --name wp-create-microservices \
-            ${{ secrets.DOCKER_USERNAME }}/wp-create-prueba-microservices:latest
+            ${{ secrets.DOCKER_USERNAME }}/wp-create-microservices:latest
           
           # Verificar contenedores en ejecución
           sudo docker ps -a
