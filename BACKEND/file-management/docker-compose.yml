@@ -13,30 +13,48 @@ services:
   upload-service:
     build: ./upload-service
     container_name: upload-service
+    restart: always
     ports:
       - "8088:8088"
+    volumes:
+      - ./upload-service/src/uploads:/app/src/uploads  # Mapea la carpeta `uploads/`
     depends_on:
       - mongo
+    environment:
+      MONGO_URI: mongodb://mongo:27017/file-management
 
   delete-service:
     build: ./delete-service
     container_name: delete-service
+    restart: always
     ports:
       - "8089:8089"
+    volumes:
+      - ./upload-service/src/uploads:/app/src/uploads  # Accede a `uploads/`
     depends_on:
       - mongo
+      - upload-service
+    environment:
+      MONGO_URI: mongodb://mongo:27017/file-management
 
   search-service:
     build: ./search-service
     container_name: search-service
+    restart: always
     ports:
       - "8090:8090"
+    volumes:
+      - ./upload-service/src/uploads:/app/src/uploads  # Accede a `uploads/`
     depends_on:
       - mongo
+      - upload-service
+    environment:
+      MONGO_URI: mongodb://mongo:27017/file-management
 
   frontend:
     build: ./frontend
     container_name: frontend
+    restart: always
     ports:
       - "8091:8091"
     depends_on:
