@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "BACKEND/weekly-planner/webhooks**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/weekly-planner/webhooks/**"  # Cambios en esta carpeta activan el pipeline
 
 jobs:
   build-and-push-wp-update:

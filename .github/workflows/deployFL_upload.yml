@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "BACKEND/weekly-planner/services/create_service**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/weekly-planner/services/create_service/**"  # Cambios en esta carpeta activan el pipeline
 
 jobs:
   build-and-push-fm-upload:
