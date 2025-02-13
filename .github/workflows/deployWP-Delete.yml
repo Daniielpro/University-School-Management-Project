@@ -1,74 +1,81 @@
-name: Build, Push, and Deploy Create Availability
+name: Build, Push, and Deploy delete Availability
 
 on:
   push:
     branches: [ "QA" ]
     paths:
-      - "BACKEND/weekly-planner/services/delete_services**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/weekly-planner/services/delete_services**"
 
 jobs:
-  build-and-push-WP-delete:
+  build-and-push-wp-delete:
     runs-on: ubuntu-latest
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
-      - name: Checkout Code
+      - name: 📥 Checkout Code
         uses: actions/checkout@v3
 
-      - name: Log in to Docker Hub
+      - name: 🔑 Log in to Docker Hub
         uses: docker/login-action@v2
-        with: 
+        with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker image
+      - name: 🛠️ Build Docker image
         run: |
-          cd BACKEND/weekly-planner/services/delete_services/app
+          cd BACKEND/weekly-planner/services/delete_service/app/
           docker build \
             --label "commit_sha=${{ github.sha }}" \
-            -t ${{ secrets.DOCKER_USERNAME }}/wpdelete-microservices:latest .
+            -t ${{ secrets.DOCKER_USERNAME }}/wp-delete-microservices:latest .
 
-      - name: Push Docker image to Docker Hub
+      - name: 🚀 Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/wpdelete-microservices:latest
-          
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/exam-reminder-microservices:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/wp-delete-microservices:latest
 
-  deploy-exam-reminder:
-    needs: build-and-push-WP-delete
+  deploy-aws-wp-delete:
     runs-on: ubuntu-latest
+    needs: build-and-push-wp-delete
     steps:
-      - name: Set permissions for private key
+      - name: 🔑 Set permissions for private key
         run: |
           echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
           chmod 600 key.pem
 
-      - name: Deploy Docker Container on AWS
+      - name: 🚀 Deploy Docker Container on AWS Ubuntu
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M3 }} << "EOF"
-          sudo yum update -y
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_M3 }} << "EOF"
+
+          # Actualizar paquetes en Ubuntu
+          sudo apt update -y && sudo apt upgrade -y
+
+          # Verificar si Docker ya está instalado
           if ! command -v docker &> /dev/null; then
-            sudo yum install -y docker
+            echo "🛠 Instalando Docker..."
+            sudo apt install -y ca-certificates curl gnupg
+            sudo install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+            sudo chmod a+r /etc/apt/keyrings/docker.asc
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            sudo apt update -y
+            sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            sudo usermod -aG docker ubuntu
+            sudo systemctl start docker
+            sudo systemctl enable docker
+          else
+            echo "✅ Docker ya está instalado."
           fi
-          sudo systemctl start docker
-          sudo systemctl enable docker
+
+          # Eliminar contenedor antiguo si existe
+          sudo docker stop wp-delete-microservices || true
+          sudo docker rm wp-delete-microservices || true
           
-          sudo docker stop wpdelete-microservices || true
-          sudo docker rm wpdelete-microservices || true
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/wpdelete-microservices:latest
+          # Descargar y ejecutar el nuevo contenedor con la imagen correcta
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/wp-delete-microservices:latest
+          sudo docker run -d -p 3021:3021 --name wp-delete-microservices \
+            ${{ secrets.DOCKER_USERNAME }}/wp-delete-microservices:latest
           
-          sudo docker run -d -p 3021:3021 \
-            --name wpdelete-microservices \
-            -e DB_USER=${{ secrets.DB_USER }} \
-            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            -e DB_HOST=${{ secrets.DB_HOST }} \
-            -e DB_PORT=${{ secrets.DB_PORT }} \
-            -e DB_NAME=${{ secrets.DB_NAME }} \
-            -e WEBHOOK_URL=${{ secrets.WEBHOOK_URL }} \
-            ${{ secrets.DOCKER_USERNAME }}/wpdelete-microservices:latest
-          
+          # Verificar contenedores en ejecución
           sudo docker ps -a
+          
           EOF

@@ -1,69 +1,81 @@
-name: Build, Push, and Deploy Create Availability
+name: Build, Push, and Deploy read Availability
 
 on:
   push:
     branches: [ "QA" ]
     paths:
-      - "BACKEND/weekly-planner/services/read_services/**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/weekly-planner/services/read_service/**"
 
 jobs:
-
   build-and-push-wp-read:
     runs-on: ubuntu-latest
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with: 
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Build Docker image
-      run: |
-          cd BACKEND/weekly-planner/services/read_services/app 
+      - name: 🔑 Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: 🛠️ Build Docker image
+        run: |
+          cd BACKEND/weekly-planner/services/read_service/app/
           docker build \
             --label "commit_sha=${{ github.sha }}" \
-            -t ${{ secrets.DOCKER_USERNAME }}/wpread-microservices:latest .
+            -t ${{ secrets.DOCKER_USERNAME }}/wp-read-microservices:latest .
 
-    - name: Push Docker image to Docker Hub
-      run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/wpread-microservices:latest
+      - name: 🚀 Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/wp-read-microservices:latest
 
-  deploy-WP-read:
-      needs: build-and-push-wp-read
-      runs-on: ubuntu-latest
-      steps:
-        - name: Set permissions for private key
-          run: |
-            echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
-            chmod 600 key.pem
+  deploy-aws-wp-read:
+    runs-on: ubuntu-latest
+    needs: build-and-push-wp-read
+    steps:
+      - name: 🔑 Set permissions for private key
+        run: |
+          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
+          chmod 600 key.pem
 
-        - name: Deploy Docker Container on AWS
-          run: |
-            ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M4 }} << "EOF"
-            sudo yum update -y
-            if ! command -v docker &> /dev/null; then
-              sudo yum install -y docker
-            fi
+      - name: 🚀 Deploy Docker Container on AWS Ubuntu
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_M3 }} << "EOF"
+
+          # Actualizar paquetes en Ubuntu
+          sudo apt update -y && sudo apt upgrade -y
+
+          # Verificar si Docker ya está instalado
+          if ! command -v docker &> /dev/null; then
+            echo "🛠 Instalando Docker..."
+            sudo apt install -y ca-certificates curl gnupg
+            sudo install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+            sudo chmod a+r /etc/apt/keyrings/docker.asc
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            sudo apt update -y
+            sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            sudo usermod -aG docker ubuntu
             sudo systemctl start docker
             sudo systemctl enable docker
-            
-            sudo docker stop wpread-microservices || true
-            sudo docker rm wpread-microservices || true
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/wpread-microservices:latest
-            sudo docker run -d -p 3022:3022 \
-            --name wpread-microservices\
-            -e DB_USER=${{ secrets.DB_USER }} \
-            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            -e DB_HOST=${{ secrets.DB_HOST }} \
-            -e DB_PORT=${{ secrets.DB_PORT }} \
-            -e DB_NAME=${{ secrets.DB_NAME }} \
-            -e WEBHOOK_URL=${{ secrets.WEBHOOK_URL }} \ 
-            ${{ secrets.DOCKER_USERNAME }}/wpread-microservices:latest
-            
-            sudo docker ps -a
-            EOF
+          else
+            echo "✅ Docker ya está instalado."
+          fi
+
+          # Eliminar contenedor antiguo si existe
+          sudo docker stop wp-read-microservices || true
+          sudo docker rm wp-read-microservices || true
+          
+          # Descargar y ejecutar el nuevo contenedor con la imagen correcta
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/wp-read-microservices:latest
+          sudo docker run -d -p 3022:3022 --name wp-read-microservices \
+            ${{ secrets.DOCKER_USERNAME }}/wp-read-microservices:latest
+          
+          # Verificar contenedores en ejecución
+          sudo docker ps -a
+          
+          EOF
