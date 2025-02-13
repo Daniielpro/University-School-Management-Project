@@ -39,12 +39,12 @@ jobs:
     steps:
       - name: 🔑 Set permissions for private key
         run: |
-          echo "${{ secrets.AWS_EC2_KEY2 }}" > key.pem
+          echo "${{ secrets.AWS_EC2_KEY }}" > key.pem
           chmod 600 key.pem
 
       - name: 🚀 Deploy Docker Container on AWS Ubuntu
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_M5 }} << "EOF"
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_M6 }} << "EOF"
 
           # Actualizar paquetes en Ubuntu
           sudo apt update -y && sudo apt upgrade -y
