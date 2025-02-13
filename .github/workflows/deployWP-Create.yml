@@ -2,7 +2,7 @@ name: Build, Push, and Deploy Create Availability
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "QA" ]
     paths:
       - "BACKEND/weekly-planner/services/create_service/**"
 
