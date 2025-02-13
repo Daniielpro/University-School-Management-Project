@@ -2,7 +2,7 @@ name: Build, Push, and Deploy Create Availability
 
 on:
   push:
-    branches: [ "QA" ]
+    branches: [ "main" ]
     paths:
       - "BACKEND/weekly-planner/services/create_service/**"
 
@@ -24,14 +24,14 @@ jobs:
 
       - name: 🛠️ Build Docker image
         run: |
-          cd BACKEND/weekly-planner/services/create_service/app
+          cd BACKEND\weekly-planner\services\create_service\app\
           docker build \
             --label "commit_sha=${{ github.sha }}" \
             -t ${{ secrets.DOCKER_USERNAME }}/wp-create-microservices:latest .
 
       - name: 🚀 Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/wp-create-microservices:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/wp-create-prueba-microservices:latest
 
   deploy-aws-wp-create:
     runs-on: ubuntu-latest
@@ -44,39 +44,38 @@ jobs:
 
       - name: 🚀 Deploy Docker Container on AWS Ubuntu
         run: |
-            ssh -t -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_M3 }} << "EOF"
-            
-            # Actualizar paquetes en Ubuntu
-            sudo apt update -y && sudo apt upgrade -y
-            
-            # Verificar si Docker ya está instalado
-            if ! command -v docker &> /dev/null; then
-              echo "🛠 Instalando Docker..."
-              sudo apt install -y ca-certificates curl gnupg
-              sudo install -m 0755 -d /etc/apt/keyrings
-              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
-              sudo chmod a+r /etc/apt/keyrings/docker.asc
-              echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-              sudo apt update -y
-              sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-              sudo usermod -aG docker ubuntu
-              sudo systemctl start docker
-              sudo systemctl enable docker
-            else
-              echo "✅ Docker ya está instalado."
-            fi
-        
-            # Eliminar contenedor antiguo si existe
-            sudo docker stop wp-create-microservices || true
-            sudo docker rm wp-create-microservices || true
-            
-            # Descargar y ejecutar el nuevo contenedor con la imagen correcta
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/wp-create-microservices:latest
-            sudo docker run -d -p 3010:3010 --name wp-create-microservices \
-              ${{ secrets.DOCKER_USERNAME }}/wp-create-microservices:latest
-            
-            # Verificar contenedores en ejecución
-            sudo docker ps -a
-        
-            EOF
-        
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_M3 }} << "EOF"
+
+          # Actualizar paquetes en Ubuntu
+          sudo apt update -y && sudo apt upgrade -y
+
+          # Verificar si Docker ya está instalado
+          if ! command -v docker &> /dev/null; then
+            echo "🛠 Instalando Docker..."
+            sudo apt install -y ca-certificates curl gnupg
+            sudo install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+            sudo chmod a+r /etc/apt/keyrings/docker.asc
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            sudo apt update -y
+            sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            sudo usermod -aG docker ubuntu
+            sudo systemctl start docker
+            sudo systemctl enable docker
+          else
+            echo "✅ Docker ya está instalado."
+          fi
+
+          # Eliminar contenedor antiguo si existe
+          sudo docker stop wp-create-microservices || true
+          sudo docker rm wp-create-microservices || true
+          
+          # Descargar y ejecutar el nuevo contenedor con la imagen correcta
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/wp-create-microservices:latest
+          sudo docker run -d -p 3020:3020 --name wp-create-microservices \
+            ${{ secrets.DOCKER_USERNAME }}/wp-create-prueba-microservices:latest
+          
+          # Verificar contenedores en ejecución
+          sudo docker ps -a
+          
+          EOF
