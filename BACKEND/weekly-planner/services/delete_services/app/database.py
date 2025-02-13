@@ -9,7 +9,7 @@ DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_HOST = os.getenv('DB_HOST')
 DB_PORT = os.getenv('DB_PORT')
 DB_NAME = os.getenv('DB_NAME')
-
+ 
 def get_db_connection():
     """Crea y retorna una conexión a la base de datos"""
     return psycopg2.connect(

@@ -24,7 +24,7 @@ jobs:
 
       - name: 🛠️ Build Docker image
         run: |
-          cd BACKEND/weekly-planner/services/delete_service/app/
+          cd BACKEND/weekly-planner/services/delete_services/app/
           docker build \
             --label "commit_sha=${{ github.sha }}" \
             -t ${{ secrets.DOCKER_USERNAME }}/wp-delete-microservices:latest .

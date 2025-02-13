@@ -27,7 +27,7 @@ jobs:
           cd BACKEND/weekly-planner/webhooks/
           docker build \
             --label "commit_sha=${{ github.sha }}" \
-            -t ${{ secrets.DOCKER_USERNAME }}/webkook-microservices:latest .
+            -t ${{ secrets.DOCKER_USERNAME }}/webkhook-microservices:latest .
 
       - name: 🚀 Push Docker image to Docker Hub
         run: |
