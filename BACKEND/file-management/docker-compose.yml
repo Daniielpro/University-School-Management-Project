@@ -20,8 +20,7 @@ services:
       - ./upload-service/src/uploads:/app/src/uploads  # Mapea la carpeta `uploads/`
     depends_on:
       - mongo
-    environment:
-      MONGO_URI: mongodb://mongo:27017/file-management
+    
 
   delete-service:
     build: ./delete-service
@@ -34,8 +33,7 @@ services:
     depends_on:
       - mongo
       - upload-service
-    environment:
-      MONGO_URI: mongodb://mongo:27017/file-management
+    
 
   search-service:
     build: ./search-service
@@ -48,8 +46,7 @@ services:
     depends_on:
       - mongo
       - upload-service
-    environment:
-      MONGO_URI: mongodb://mongo:27017/file-management
+ 
 
   frontend:
     build: ./frontend
