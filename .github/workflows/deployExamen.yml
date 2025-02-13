@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/exam-reminder-service**"  # Cambios en esta carpeta activan el pipeline
 
 jobs:
   build-and-push-exam:

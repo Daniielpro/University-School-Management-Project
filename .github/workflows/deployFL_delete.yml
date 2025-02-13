@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/file-management/delete-service/**"  # Cambios en esta carpeta activan el pipeline
 
 jobs:
   build-and-push-fm-delete:

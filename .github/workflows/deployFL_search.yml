@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/file-management/search-service**"  # Cambios en esta carpeta activan el pipeline
 
 jobs:
   build-and-push-fm-search:

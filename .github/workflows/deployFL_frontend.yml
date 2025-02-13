@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/file-management/frontend/**"  # Cambios en esta carpeta activan el pipeline
 
 jobs:
   build-and-push-fm-frontend:
