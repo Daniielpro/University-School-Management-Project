@@ -17,10 +17,11 @@ services:
     ports:
       - "8088:8088"
     volumes:
-      - ./upload-service/src/uploads:/app/src/uploads  # Mapea la carpeta `uploads/`
+      - ./upload-service/src/uploads:/app/src/uploads  # Volumen persistente de `uploads/`
     depends_on:
       - mongo
-    
+    environment:
+      MONGO_URI: mongodb://mongo:27017/file-management
 
   delete-service:
     build: ./delete-service
@@ -29,11 +30,12 @@ services:
     ports:
       - "8089:8089"
     volumes:
-      - ./upload-service/src/uploads:/app/src/uploads  # Accede a `uploads/`
+      - ./upload-service/src/uploads:/app/src/uploads  # Montar `uploads/` en delete-service
     depends_on:
       - mongo
       - upload-service
-    
+    environment:
+      MONGO_URI: mongodb://mongo:27017/file-management
 
   search-service:
     build: ./search-service
@@ -42,11 +44,12 @@ services:
     ports:
       - "8090:8090"
     volumes:
-      - ./upload-service/src/uploads:/app/src/uploads  # Accede a `uploads/`
+      - ./upload-service/src/uploads:/app/src/uploads  # Montar `uploads/` en search-service
     depends_on:
       - mongo
       - upload-service
- 
+    environment:
+      MONGO_URI: mongodb://mongo:27017/file-management
 
   frontend:
     build: ./frontend
@@ -61,3 +64,4 @@ services:
 
 volumes:
   mongo_data:
+
