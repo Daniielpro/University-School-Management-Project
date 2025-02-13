@@ -10,10 +10,9 @@ This is the **TASKIFY frontend**, built with **Vite, React, and Material UI**. I
 👉 **Board, list, and card management**  
 👉 **Authentication with JWT**  
 👉 **Connection with backend microservices**  
-👉 **Deployment with Docker and NGINX**  
 
 ---
-
+ 
 ## 🏰️ **Project Architecture**
 | Component  | Description |
 |-------------|------------|
