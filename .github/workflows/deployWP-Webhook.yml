@@ -33,7 +33,7 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/wpwebhook-microservices:latest
 
   deploy-WP-webhook:
-      needs: build-and-push-WP-webhook
+      needs: build-and-push-wp-webhook
       runs-on: ubuntu-latest
       steps:
         - name: Set permissions for private key
