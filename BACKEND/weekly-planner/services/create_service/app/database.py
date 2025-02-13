@@ -19,7 +19,7 @@ def check_db_connection():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT 1;")  
+        cursor.execute("SELECT 1;")   
         cursor.close()
         conn.close()
         print("✅ Conexión a la base de datos exitosa!")
