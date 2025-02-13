@@ -28,7 +28,7 @@ async def get_index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     import uvicorn
     PORT = int(os.getenv("PORT", 3020))
     check_db_connection()
