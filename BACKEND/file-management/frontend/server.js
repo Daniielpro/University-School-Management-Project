@@ -10,5 +10,5 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 8091;
 app.listen(PORT, () => {
-    console.log(`🌍 Frontend corriendo en http://localhost:${PORT}`);
+    console.log(`🌍 Frontend corriendo en http://23.23.90.47:${PORT}`);
 });

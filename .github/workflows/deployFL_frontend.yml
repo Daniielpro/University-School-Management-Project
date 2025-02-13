@@ -43,7 +43,7 @@ jobs:
 
       - name: Deploy Docker Container on AWS
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M9 }} << "EOF"
+          ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.AWS_EC2_HOST_M4 }} << "EOF"
           sudo yum update -y
           if ! command -v docker &> /dev/null; then
             sudo yum install -y docker

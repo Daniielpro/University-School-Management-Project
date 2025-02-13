@@ -4,7 +4,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     const formData = new FormData();
     formData.append('file', fileInput.files[0]);
 
-    const response = await fetch('http://localhost:8088/api/files/upload', {
+    const response = await fetch('http://23.23.90.47:8088/api/files/upload', {
         method: 'POST',
         body: formData,
     });
@@ -16,7 +16,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
 });
 
 async function deleteFile(id) {
-    const response = await fetch(`http://localhost:8089/api/files/delete/${id}`, {
+    const response = await fetch(`http://23.23.90.47:8089/api/files/delete/${id}`, {
         method: 'DELETE'
     });
 
@@ -30,7 +30,7 @@ async function deleteFile(id) {
 
 async function loadFiles() {
     try {
-        const response = await fetch('http://localhost:8090/api/files');
+        const response = await fetch('http://23.23.90.47:8090/api/files');
         const files = await response.json();
         const fileList = document.getElementById('fileList');
         fileList.innerHTML = '';
