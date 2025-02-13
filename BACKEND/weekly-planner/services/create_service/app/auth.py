@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-# Cargar variables desde .env
+# Cargar variables desde .env 
 load_dotenv()
 
 SECRET_KEY = os.getenv("JWT_SECRET")  # Misma clave que el micro de auth
