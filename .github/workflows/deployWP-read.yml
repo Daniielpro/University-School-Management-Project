@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "BACKEND/weekly-planner/services/read_service/**"
+      - "BACKEND/weekly-planner/services/read_services/**"
 
 jobs:
   build-and-push-wp-read:

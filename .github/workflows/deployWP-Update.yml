@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "BACKEND/weekly-planner/services/update_service/**"
+      - "BACKEND/weekly-planner/services/update_services/**"
 
 jobs:
   build-and-push-wp-update:

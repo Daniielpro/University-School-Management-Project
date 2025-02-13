@@ -6,3 +6,4 @@ class ActivityUpdate(BaseModel):
     day_of_week: str  
     start_time: str   
     end_time: str     
+ 
