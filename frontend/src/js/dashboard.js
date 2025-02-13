@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const usuario = localStorage.getItem("usuario") || "Usuario Desconocido";
 
-    document.getElementById("user-info").textContent = `👤 ${usuario}`;
+    document.getElementById("user-info").textContent = `👤 ${usuario}`; 
 });
 
 
