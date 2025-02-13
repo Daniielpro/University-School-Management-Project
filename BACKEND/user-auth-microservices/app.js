@@ -36,5 +36,5 @@ app.get('*', (req, res) => {
 
 
 app.listen(PORT, () => {
-    console.log(`Auth service ejecutándose en: http://3.228.90.193:${PORT}`);
+    console.log(`Auth service ejecutándose en: http://13.216.158.215:${PORT}`);
 });
