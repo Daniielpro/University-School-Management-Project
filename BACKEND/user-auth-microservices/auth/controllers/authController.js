@@ -7,7 +7,7 @@ class AuthController {
             const userId = await AuthService.registerUser(username, email, password);
             res.status(201).json({ message: 'User registered successfully', userId });
         } catch (error) {
-            res.status(400).json({ error: error.message });
+            res.status(400).json({ error: error.message }); 
         }
     }
 
