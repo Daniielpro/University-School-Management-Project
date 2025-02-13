@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
-dotenv.config();
+dotenv.config(); 
 
 class AuthService {
     static async registerUser(username, email, password) {
