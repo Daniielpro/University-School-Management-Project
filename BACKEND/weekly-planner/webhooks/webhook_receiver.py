@@ -50,7 +50,7 @@ async def websocket_endpoint(websocket: WebSocket):
             data = await websocket.receive_text()
             await websocket.send_text(f"Mensaje recibido: {data}")
     except Exception as e:
-        print(f"Error en WebSocket: {e}")
+        print(f"Error en WebSocket: {e}") 
         await websocket.close()
 
 
