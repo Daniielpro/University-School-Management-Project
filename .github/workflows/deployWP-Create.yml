@@ -44,7 +44,7 @@ jobs:
 
       - name: 🚀 Deploy Docker Container on AWS Ubuntu
         run: |
-            ssh -t -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_QA1 }} << "EOF"
+            ssh -t -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST_M3 }} << "EOF"
             
             # Actualizar paquetes en Ubuntu
             sudo apt update -y && sudo apt upgrade -y
