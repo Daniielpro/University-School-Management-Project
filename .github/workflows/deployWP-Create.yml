@@ -31,7 +31,7 @@ jobs:
 
       - name: 🚀 Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/wp-create-prueba-microservices:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/wp-create-microservices:latest
 
   deploy-aws-wp-create:
     runs-on: ubuntu-latest
