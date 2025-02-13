@@ -145,7 +145,7 @@ async function updateActivity() {
         console.error("Error updating activity:", error);
     }
 }
-const socket = new WebSocket("ws://localhost:3030/ws");
+const socket = new WebSocket("ws://52.23.24.3:3030/ws");
 
 
 socket.onopen = () => {
