@@ -1,6 +1,6 @@
 const AuthService = require('../services/authService');
 
-class AuthController {
+class AuthController { 
     static async register(req, res) {
         try {
             const { username, email, password } = req.body;
