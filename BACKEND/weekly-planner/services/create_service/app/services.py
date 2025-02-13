@@ -3,7 +3,7 @@ from database import get_db_connection
 from models import Activity
 import os
 
-WEBHOOK_URL = os.getenv("WEBHOOK_URL", "http://localhost:3030/webhook")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL", "http://52.23.24.3:3030/webhook")
 
 def send_webhook(event_type, data):
     try:

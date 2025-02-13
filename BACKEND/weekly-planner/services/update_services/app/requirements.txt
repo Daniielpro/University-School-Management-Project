@@ -3,3 +3,8 @@ uvicorn
 psycopg2-binary
 python-dotenv
 requests
+flask
+flask_cors
+uvicorn[standard]
+websockets
+PyJWT

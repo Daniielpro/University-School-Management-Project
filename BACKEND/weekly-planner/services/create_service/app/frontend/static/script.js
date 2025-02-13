@@ -1,7 +1,7 @@
-const API_BASE_URL_CREATE = "http://localhost:3020/activities"; 
-const API_BASE_URL_READ = "http://localhost:3022/activities";   
-const API_BASE_URL_UPDATE = "http://localhost:3024/activities"; 
-const API_BASE_URL_DELETE = "http://localhost:3021/activities"; 
+const API_BASE_URL_CREATE = "http://52.23.24.3:3020/activities"; 
+const API_BASE_URL_READ = "http://52.23.24.3:3022/activities";   
+const API_BASE_URL_UPDATE = "http://52.23.24.3:3024/activities"; 
+const API_BASE_URL_DELETE = "http://52.23.24.3:3021/activities"; 
 
 document.addEventListener("DOMContentLoaded", () => {
     const activityForm = document.getElementById("activityForm");
