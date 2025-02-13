@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "QA" ]
     paths:
-      - "BACKEND/link-management/save-link-service**"  # Cambios en esta carpeta activan el pipeline
+      - "BACKEND/link-management/save-link-service/**"  # Cambios en esta carpeta activan el pipeline
 
 jobs:
   build-and-push-lm-save:

@@ -88,7 +88,7 @@
             const url = document.getElementById('url').value;
             const description = document.getElementById('description').value;
 
-            const response = await fetch('http://23.23.90.47:8085/api/links/save', {
+            const response = await fetch('http://3.218.222.100:8085/api/links/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url, description }),
@@ -101,7 +101,7 @@
         });
 
         async function loadLinks() {
-            const response = await fetch('http://23.23.90.47:8085/api/links');
+            const response = await fetch('http://3.218.222.100:8085/api/links');
             const links = await response.json();
             const linkList = document.getElementById('linkList');
             linkList.innerHTML = '';
