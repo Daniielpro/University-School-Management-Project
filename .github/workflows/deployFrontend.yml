@@ -7,7 +7,7 @@ on:
       - "frontend/**"
 
 jobs:
-  build-and-push-auth-service:
+  build-and-push-frontend:
     runs-on: ubuntu-latest
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -24,18 +24,18 @@ jobs:
 
       - name: 🛠️ Build Docker image
         run: |
-          cd BACKEND/user-auth-microservices/
+          cd frontend/
           docker build \
             --label "commit_sha=${{ github.sha }}" \
-            -t ${{ secrets.DOCKER_USERNAME }}/auth-service-microservices:latest .
+            -t ${{ secrets.DOCKER_USERNAME }}/frontend-microservices:latest .
 
       - name: 🚀 Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/auth-service-microservices:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/frontend-microservices:latest
 
-  deploy-aws-auth-service:
+  deploy-aws-frontend:
     runs-on: ubuntu-latest
-    needs: build-and-push-auth-service
+    needs: build-and-push-frontend
     steps:
       - name: 🔑 Set permissions for private key
         run: |
@@ -67,13 +67,13 @@ jobs:
           fi
 
           # Eliminar contenedor antiguo si existe
-          sudo docker stop auth-service-microservices || true
-          sudo docker rm auth-service-microservices || true
+          sudo docker stop frontend-microservices || true
+          sudo docker rm frontend-microservices || true
           
           # Descargar y ejecutar el nuevo contenedor con la imagen correcta
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/auth-service-microservices:latest
-          sudo docker run -d -p 3000:3000 --name auth-service-microservices \
-            ${{ secrets.DOCKER_USERNAME }}/auth-service-microservices:latest
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/frontend-microservices:latest
+          sudo docker run -d -p 3000:3000 --name frontend-microservices \
+            ${{ secrets.DOCKER_USERNAME }}/frontend-microservices:latest
           
           # Verificar contenedores en ejecución
           sudo docker ps -a
