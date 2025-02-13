@@ -7,7 +7,7 @@ WEBHOOK_URL = os.getenv("WEBHOOK_URL", "http://localhost:3030/webhook")
 def send_webhook(event_type, data):
     payload = {"event_type": event_type, "data": data}
     try:
-        response = requests.post(WEBHOOK_URL, json=payload)
+        response = requests.post(WEBHOOK_URL, json=payload) 
         response.raise_for_status()
         print(f"✅ Webhook enviado: {event_type}")
     except requests.exceptions.RequestException as e:
