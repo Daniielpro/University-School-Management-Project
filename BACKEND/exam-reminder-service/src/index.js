@@ -6,14 +6,16 @@ const swaggerDocs = require('./docs/swagger');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 8081;
- 
+const PORT = process.env.PORT || 8081
+const HOST = '0.0.0.0';
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// Servir archivos estáticos desde la carpeta 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 let lastDeletedExam = null;
 let lastDeletion = false;
@@ -22,10 +24,18 @@ let lastDeletion = false;
     const db = await connectDB();
     app.use('/api', reminderRoutes(db));
     
-    // Mostrar index.html de la carpeta public cuando se accede a la raíz
-    app.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, 'views', 'index.html'));
+   
+    app.get('/', async (req, res) => {
+        try {
+            const [reminders] = await db.execute('SELECT * FROM reminders ORDER BY exam_date ASC');
+            res.render('index', { reminders, lastDeletedExam });
+            lastDeletedExam = null; 
+        } catch (error) {
+            console.error('Error al obtener recordatorios:', error);
+            res.status(500).send('Error interno del servidor');
+        }
     });
+    
     
     app.post('/add-reminder', async (req, res) => {
         try {
@@ -41,11 +51,13 @@ let lastDeletion = false;
         }
     });
     
+    
     app.get('/check-deletion', (req, res) => {
         res.json({ deleted: lastDeletion });
         lastDeletion = false; 
     });
 
+    
     const deleteExpiredReminders = async () => {
         try {
             const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
@@ -62,12 +74,17 @@ let lastDeletion = false;
         }
     };
     
+    
     setInterval(deleteExpiredReminders, 60 * 1000);
     
-    app.listen(PORT, () => {
-        console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-        console.log('📄 Documentación en: http://localhost:8081/api-docs');
+    app.listen(PORT, HOST, () => {
+        console.log(`🚀 Servidor corriendo en http://${HOST}:${PORT}`);
+        console.log('📄 Documentación en: http://localhost:8081/pi-docs');
         console.log('🖥 Vista en: http://localhost:8081');
         console.log('⏳ Eliminación automática de recordatorios habilitada (cada 1 minuto)');
     });
 })();
+
+
+
+
