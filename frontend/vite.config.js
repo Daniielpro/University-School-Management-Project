@@ -5,3 +5,4 @@ export default defineConfig({
     base: './',      // Asegura que los archivos se carguen correctamente en la raíz
     publicDir: 'public'
 });
+ 
