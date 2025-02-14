@@ -9,7 +9,7 @@ const addReminder = async (db, req, res) => {
     } catch (error) {
         console.error('❌ Error al agregar recordatorio:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
-    } 
+    }  
 };
 
 const getReminders = async (db, req, res) => {
