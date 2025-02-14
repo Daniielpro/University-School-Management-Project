@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const apiUrl = "http://localhost:8083/api/maestros";
+    const apiUrl = "http://35.153.238.113:8083/api/maestros";
 
     const maestroForm = document.getElementById("maestro-form");
     const nombreInput = document.getElementById("nombre");
