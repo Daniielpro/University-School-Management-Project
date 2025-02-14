@@ -40,6 +40,6 @@ func main() {
 	r.Any("/graphql", gin.WrapH(h))
 
 	// ✅ Iniciar el servidor
-	log.Println("Servidor corriendo en http://35.153.238.113:8080/")
-	log.Fatal(r.Run(":8080"))
+	log.Println("Servidor corriendo en http://0.0.0.0:8080/") // Cambié 35.153.238.113 por 0.0.0.0
+	log.Fatal(r.Run("0.0.0.0:8080"))                          // Cambié localhost por 0.0.0.0 para escuchar en todas las interfaces
 }
