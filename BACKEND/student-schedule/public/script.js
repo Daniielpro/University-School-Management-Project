@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/graphql"; 
+const API_URL = "http://35.153.238.113:8080/graphql"; 
 
 document.addEventListener("DOMContentLoaded", loadEvents);
 
