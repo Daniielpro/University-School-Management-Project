@@ -9,7 +9,7 @@ COPY package*.json ./
  
 # Instalar las dependencias del proyecto
 RUN npm install
-
+ 
 # Copiar el resto del código de la aplicación
 COPY . .
 
