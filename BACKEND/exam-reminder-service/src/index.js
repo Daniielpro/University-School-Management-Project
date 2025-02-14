@@ -7,7 +7,6 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 8081
-const HOST = '0.0.0.0';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
@@ -77,8 +76,8 @@ let lastDeletion = false;
     
     setInterval(deleteExpiredReminders, 60 * 1000);
     
-    app.listen(PORT, HOST, () => {
-        console.log(`🚀 Servidor corriendo en http://${HOST}:${PORT}`);
+    app.listen(PORT,() => {
+        console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
         console.log('📄 Documentación en: http://localhost:8081/pi-docs');
         console.log('🖥 Vista en: http://localhost:8081');
         console.log('⏳ Eliminación automática de recordatorios habilitada (cada 1 minuto)');
