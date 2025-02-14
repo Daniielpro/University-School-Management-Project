@@ -1,7 +1,7 @@
-const API_CREATE = "http://localhost:8093/api/events";
-const API_LIST = "http://localhost:8095/api/events";
-const API_UPDATE = "http://localhost:8096/api/events/";
-const API_DELETE = "http://localhost:8094/api/events/";
+const API_CREATE = "http://34.236.1.24:8093/api/events";
+const API_LIST = "http://34.236.1.24:8095/api/events";
+const API_UPDATE = "http://34.236.1.24:8096/api/events/";
+const API_DELETE = "http://34.236.1.24:8094/api/events/";
 
 document.getElementById('eventForm').addEventListener('submit', async (event) => {
     event.preventDefault();
