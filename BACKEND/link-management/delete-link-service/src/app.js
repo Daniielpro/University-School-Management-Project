@@ -10,5 +10,7 @@ app.use(cors());
  
 connectDB();
 app.use('/api/links', linkRoutes); 
-
+app.get('/', (req, res) => {
+    res.status(200).send("OK");
+  });
 module.exports = app; 
