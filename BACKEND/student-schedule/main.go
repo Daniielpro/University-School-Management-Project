@@ -3,10 +3,11 @@ package main
 import (
 	"log"
 
-	"github.com/gin-gonic/gin"
-	"github.com/graphql-go/handler"
 	"student-schedule/database"
 	customGraphQL "student-schedule/graphql"
+
+	"github.com/gin-gonic/gin"
+	"github.com/graphql-go/handler"
 )
 
 func main() {
@@ -39,6 +40,6 @@ func main() {
 	r.Any("/graphql", gin.WrapH(h))
 
 	// ✅ Iniciar el servidor
-	log.Println("Servidor corriendo en http://localhost:8080/")
+	log.Println("Servidor corriendo en http://35.153.238.113:8080/")
 	log.Fatal(r.Run(":8080"))
 }
