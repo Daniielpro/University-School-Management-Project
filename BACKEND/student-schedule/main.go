@@ -31,9 +31,8 @@ func main() {
 	r := gin.Default()
 	r.Static("/public", "./public")
 
-	// ✅ Servir `index.html` en la ruta `/`
 	r.GET("/", func(c *gin.Context) {
-		c.File("./public/index.html")
+		c.String(200, "¡Bienvenido a Student Schedule Microservices!")
 	})
 
 	// ✅ Endpoint para GraphQL
