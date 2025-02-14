@@ -54,7 +54,7 @@ jobs:
           sudo docker stop ae-update-microservices || true
           sudo docker rm ae-update-microservices || true
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/ae-update-microservices:latest
-          sudo docker run -d -p 8094:8094 --name ae-update-microservices ${{ secrets.DOCKER_USERNAME }}/ae-update-microservices:latest
+          sudo docker run -d -p 8096:8096 --name ae-update-microservices ${{ secrets.DOCKER_USERNAME }}/ae-update-microservices:latest
 
           sudo docker ps -a
           EOF

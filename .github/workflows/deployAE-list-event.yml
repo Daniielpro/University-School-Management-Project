@@ -54,7 +54,7 @@ jobs:
           sudo docker stop ae-list-microservices || true
           sudo docker rm ae-list-microservices || true
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/ae-list-microservices:latest
-          sudo docker run -d -p 8094:8094 --name ae-list-microservices ${{ secrets.DOCKER_USERNAME }}/ae-list-microservices:latest
+          sudo docker run -d -p 8095:8095 --name ae-list-microservices ${{ secrets.DOCKER_USERNAME }}/ae-list-microservices:latest
 
           sudo docker ps -a
           EOF
