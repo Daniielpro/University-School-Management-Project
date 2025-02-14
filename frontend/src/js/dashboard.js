@@ -19,31 +19,31 @@ function loadService(service) {
     let serviceURL = "";
     switch (service) {
         case "Exam-reminder":
-            serviceURL = "http://localhost:8081/";
+            serviceURL = "http://3.228.90.193:8081/";
             break;
         case "File-management":
-            serviceURL = "http://localhost:8091/"; 
+            serviceURL = "http://23.23.90.47:8091/"; 
             break;
         case "link-management":
-            serviceURL = "http://54.175.232.102:8087/"; 
+            serviceURL = "http://3.218.222.100:8087/"; 
             break;
         case "weekly-planner":
-            serviceURL = "http://localhost:3020/";
+            serviceURL = "http://52.23.24.3:3020/";
             break;
         case "Teacher-service":
-            serviceURL = "http://localhost:8083/"; 
+            serviceURL = "http://35.153.238.113:8083/"; 
             break;
         case "Student-schedule":
-            serviceURL = "http://localhost:8080/"; 
+            serviceURL = "http://35.153.238.113:8080/"; 
             break;
         case "Tareas Service":
-            serviceURL = "http://localhost:8084/"; 
+            serviceURL = "http://35.153.238.113:8084/"; 
             break;
         case "Calculate":
-            serviceURL = "http://localhost:3010/"; 
+            serviceURL = "http://3.228.90.193:3010/"; 
              break;
          case "Academic-events":
-            serviceURL = "http://localhost:8097/"; 
+            serviceURL = "http://34.236.1.24:8097/"; 
             break;        
         default:
             serviceURL = "";
