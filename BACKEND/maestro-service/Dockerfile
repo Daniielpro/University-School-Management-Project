@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copia el archivo JAR generado en target/
 COPY target/maestro-service-*.jar maestro-service.jar
-
+ 
 # Expone el puerto 8083 en el contenedor
 EXPOSE 8083 
 
