@@ -24,14 +24,14 @@ This project is a **school and university management system** based on microserv
 | **MongoDB** | `27017` | Secondary database |
 | **User Service** | `3000` | User authentication service |
 | **Task Service** | `8084` | Task management service |
-| **academic-events** | `8097` |  |
+| **academic-events** | `8097` | academic event management microservice |
 | **Scheduler Service** | `8080` | Academic scheduling service |
 | **Exam Reminder Service** | `8081` | Exam reminder service |
 | **File Management Service** | `8091` | File upload and management service |
-| **Link Service** | `8087` |  |
-| **weekly-planner** | `3020` |  |
-| **maestro-service** | `8083` | |
-| **Calculate** | `3010` |  |
+| **Link Service** | `8087` | microservice to help in link management with search information |
+| **weekly-planner** | `3020` | weekly activity planning microservice |
+| **maestro-service** | `8083` |master management microservice for organization help |
+| **Calculate** | `3010` | Additional calculator microservice with basic functionalities |
 | **Frontend** | `5175` | Web interface |
 
 ---
@@ -73,20 +73,12 @@ git clone https://github.com/Daniielpro/University-School-Management-Project.git
 cd University-School-Management-Project
 ```
 
-### 🔹 **Run with Docker**
-```sh
-docker-compose up --build
-```
-To stop the containers:
-```sh
-docker-compose down
-```
-
 ### 🔹 **Run Locally**
-```sh
-npm install
-npm start
-```
+  1.- run each mciroservice individually to check that each one is working correctly
+
+  2.- run the authentication microservice to be able to lift user authentication and communicate with the front
+
+  3.- run the frontend to be able to enter the dashboard and interact with all the microservices
 
 ---
 ## 📜 **Authors**
