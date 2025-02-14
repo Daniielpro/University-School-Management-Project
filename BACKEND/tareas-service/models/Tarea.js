@@ -10,3 +10,4 @@ module.exports = (db) => {
     return db.model('Tarea', TareaSchema);
 };
 
+ 

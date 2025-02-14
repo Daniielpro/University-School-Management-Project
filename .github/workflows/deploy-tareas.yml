@@ -72,7 +72,7 @@ jobs:
           
           # Descargar y ejecutar el nuevo contenedor con la imagen correcta
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/tareas-service-microservices:latest
-          sudo docker run -d -p 8083:8083 --name tareas-service-microservices \
+          sudo docker run -d -p 8084:8084 --name tareas-service-microservices \
             ${{ secrets.DOCKER_USERNAME }}/tareas-service-microservices:latest
           
           # Verificar contenedores en ejecución
