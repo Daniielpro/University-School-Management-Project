@@ -8,23 +8,27 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod tidy
 
-# ✅ 4️⃣ Copiar el código fuente
+# ✅ 4️⃣ Copiar el código fuente y la carpeta `public/`
 COPY . .
 
 # ✅ 5️⃣ Compilar el binario
 RUN go build -o student-schedule main.go
 
 # ✅ 6️⃣ Crear una imagen final más liviana
-FROM ubuntu:latest
+FROM debian:bookworm-slim
 
 # ✅ 7️⃣ Instalar dependencias necesarias
-RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y ca-certificates libc6 && rm -rf /var/lib/apt/lists/*
 
 # ✅ 8️⃣ Configurar el directorio de trabajo
 WORKDIR /root/
 
-# ✅ 9️⃣ Copiar el binario desde la etapa anterior
+# ✅ 9️⃣ Copiar el binario y la carpeta `public/` desde la etapa anterior
 COPY --from=builder /app/student-schedule .
+COPY --from=builder /app/public /root/public
+
+# ✅ 🔥 Asegurar permisos correctos
+RUN chmod +x /root/student-schedule
 
 # ✅ 🔥 Exponer el puerto del servicio
 EXPOSE 8080
