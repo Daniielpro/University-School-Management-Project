@@ -7,7 +7,7 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 8081;
-
+ 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
