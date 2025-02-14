@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda Estudiantil</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- ✅ Asegurar que el path sea correcto -->
+    <link rel="stylesheet" href="/public/styles.css">
 </head>
 <body>
     <h1>Agenda Estudiantil</h1>
 
-    <!-- Formulario para crear o actualizar eventos -->
     <form id="event-form">
         <input type="hidden" id="event-id">
         <label>Título:</label>
         <input type="text" id="title" required>
-        
+
         <label>Descripción:</label>
         <input type="text" id="description">
 
@@ -27,7 +27,6 @@
         <button type="submit">Guardar Evento</button>
     </form>
 
-    <!-- Tabla de eventos -->
     <h2>Eventos</h2>
     <table>
         <thead>
@@ -39,11 +38,11 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody id="event-list">
-            <!-- Aquí se cargarán los eventos dinámicamente -->
-        </tbody>
+        <tbody id="event-list"></tbody>
     </table>
 
-    <script src="script.js"></script>
+    <!-- ✅ Asegurar que el path sea correcto -->
+    <script src="/public/script.js"></script>
 </body>
 </html>
+

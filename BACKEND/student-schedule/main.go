@@ -6,15 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/handler"
 	"student-schedule/database"
-	customGraphQL "student-schedule/graphql" // Renombramos la importación para evitar conflictos
+	customGraphQL "student-schedule/graphql"
 )
 
 func main() {
 	// Conectar a MongoDB
-	db := database.NewDatabase("mongodb://admin:1751404730@54.84.7.37:27017/student_schedule?authSource=admin", "student_schedule", "events")
+	db := database.NewDatabase("mongodb://localhost:27017", "student_schedule", "events")
 
 	// Crear esquema GraphQL
-	schema, err := customGraphQL.NewSchema(db) // Usamos el alias "customGraphQL"
+	schema, err := customGraphQL.NewSchema(db)
 	if err != nil {
 		log.Fatal("Error al crear el esquema de GraphQL:", err)
 	}
@@ -23,17 +23,22 @@ func main() {
 	h := handler.New(&handler.Config{
 		Schema:   &schema,
 		Pretty:   true,
-		GraphiQL: true, // Habilita la interfaz GraphiQL en el navegador
+		GraphiQL: true,
 	})
 
-	// Configurar servidor con Gin
+	// ✅ Servir archivos estáticos (Frontend)
 	r := gin.Default()
 	r.Static("/public", "./public")
 
-	// Endpoint para GraphQL
+	// ✅ Servir `index.html` en la ruta `/`
+	r.GET("/", func(c *gin.Context) {
+		c.File("./public/index.html")
+	})
+
+	// ✅ Endpoint para GraphQL
 	r.Any("/graphql", gin.WrapH(h))
 
-	// Correr el servidor en el puerto 8080
-	log.Println("Servidor corriendo en http://localhost:8080/graphql")
+	// ✅ Iniciar el servidor
+	log.Println("Servidor corriendo en http://localhost:8080/")
 	log.Fatal(r.Run(":8080"))
 }

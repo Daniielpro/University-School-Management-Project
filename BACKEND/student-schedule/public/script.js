@@ -1,4 +1,4 @@
-const API_URL = "http://37.153.238.113:8080/graphql"; // Ahora usamos GraphQL
+const API_URL = "http://37.153.238.113:8080/graphql"; 
 
 document.addEventListener("DOMContentLoaded", loadEvents);
 
