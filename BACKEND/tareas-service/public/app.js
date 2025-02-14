@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const apiUrl = "http://localhost:8084/api";
+    const apiUrl = "http://35.153.238.113:8084/api";
     const tareaForm = document.getElementById("tarea-form");
     const tareaInput = document.getElementById("tarea");
     const fechaInput = document.getElementById("fechaEntrega");
