@@ -231,10 +231,10 @@ app.get('/history', async (req, res) => {
     const operations = await Operation.find().sort({ createdAt: -1 });
     res.json({ operations });
 });
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
+  });
 app.listen(port, () => {
     console.log(`Calculator microservice is running on port ${port}`);
 });

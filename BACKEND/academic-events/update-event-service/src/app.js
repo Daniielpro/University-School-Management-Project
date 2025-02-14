@@ -10,7 +10,9 @@ app.use(cors());
 app.use(express.json());
 
 connectDB();
-
+app.get('/', (req, res) => {
+    res.status(200).send("OK");
+  });
 app.use('/api', eventRoutes);
 
 module.exports = app;
