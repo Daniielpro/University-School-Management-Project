@@ -2,7 +2,7 @@
 FROM openjdk:17-jdk-slim
 
 # Establece el directorio de trabajo dentro del contenedor
-WORKDIR /app
+WORKDIR /app 
 
 # Copia el archivo JAR generado en target/
 COPY target/maestro-service-*.jar maestro-service.jar
