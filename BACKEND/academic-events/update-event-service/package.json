@@ -1,0 +1,20 @@
+{
+  "name": "update-event-service",
+  "version": "1.0.0",
+  "description": "Microservice for updating academic events",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.3.2",
+    "update-event-service": "file:"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

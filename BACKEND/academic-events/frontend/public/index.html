@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Eventos Académicos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Gestión de Eventos Académicos</h1>
+
+    <form id="eventForm">
+        <input type="text" id="title" placeholder="Título del evento" required>
+        <textarea id="description" placeholder="Descripción" required></textarea>
+        <input type="date" id="date" required>
+        <input type="text" id="location" placeholder="Ubicación" required>
+        <button type="submit">Crear Evento</button>
+    </form>
+
+    <h2>Lista de Eventos</h2>
+    <ul id="eventList"></ul>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

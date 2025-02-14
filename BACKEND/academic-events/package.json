@@ -1,0 +1,13 @@
+{
+  "name": "academic-events",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"cd create-event-service && npm start\" \"cd delete-event-service && npm start\" \"cd list-event-service && npm start\" \"cd update-event-service && npm start\" \"cd frontend && npm start\""
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "dependencies": {
+    "academic-events": "file:"
+  }
+}

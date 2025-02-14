@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Taskify</title>
+    <link rel="stylesheet" href="src/css/styles.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <p id="user-name">Cargando usuario...</p>
+        </div>
+        <h2>Taskify</h2>
+        <div class="navbar-right">
+            <button id="logout-button">Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>Taskify</h2>
+            <ul>
+                <li><a href="#" onclick="loadService('Exam-reminder')">📌 Exam-reminder</a></li>
+                <li><a href="#" onclick="loadService('File-management')">📋 File-management</a></li>
+                <li><a href="#" onclick="loadService('link-management')">📅 link-management</a></li>
+                <li><a href="#" onclick="loadService('weekly-planner')">📆 Weekly Planner</a></li>
+                <li><a href="#" onclick="loadService('Teacher-service')">📌Teacher-service</a></li>
+                <li><a href="#" onclick="loadService('Student-schedule')">📋Student-schedule</a></li>
+                <li><a href="#" onclick="loadService('Tareas Service')">📅 Tareas Service</a></li>
+                <li><a href="#" onclick="loadService('Calculate')">📋Calculate-service</a></li>
+                <li><a href="#" onclick="loadService('Academic-events')">📅 Academic-events</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <h1>Bienvenido al Dashboard</h1>
+            <p class="dashboard-welcome">Gestiona tus proyectos y tareas con facilidad.</p>
+            <div class="service-content">
+                <iframe id="service-frame" src="" frameborder="0" width="100%" height="600px" style="display: none;"></iframe>
+            </div>
+        </main>
+    </div>
+
+    <script src="src/js/dashboard.js"></script>
+</body>
+</html>

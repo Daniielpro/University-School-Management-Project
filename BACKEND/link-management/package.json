@@ -1,0 +1,18 @@
+{
+  "name": "link-management",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd save-link-service && node src/server.js\" \"cd delete-link-service && node src/server.js\" \"cd frontend && node server.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "link-management": "file:"
+  }
+}

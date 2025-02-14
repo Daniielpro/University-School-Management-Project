@@ -1,0 +1,163 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Tareas API",
+      "version": "1.0.0",
+      "description": "API para gestionar tareas y asociarlas a profesores de la base de datos maestrosDB"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8084",
+        "description": "Servidor local"
+      }
+    ],
+    "paths": {
+      "/api/tareas": {
+        "get": {
+          "summary": "Obtener todas las tareas",
+          "responses": {
+            "200": {
+              "description": "Lista de tareas",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Tarea"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Crear una nueva tarea",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tarea"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Tarea creada"
+            }
+          }
+        }
+      },
+      "/api/tareas/{id}": {
+        "get": {
+          "summary": "Obtener una tarea por ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Tarea encontrada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Tarea"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Tarea no encontrada"
+            }
+          }
+        },
+        "put": {
+          "summary": "Actualizar una tarea por ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tarea"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Tarea actualizada"
+            },
+            "404": {
+              "description": "Tarea no encontrada"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Eliminar una tarea por ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Tarea eliminada"
+            },
+            "404": {
+              "description": "Tarea no encontrada"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Tarea": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "65bfc12345678e3f5c9d5e82"
+            },
+            "tarea": {
+              "type": "string",
+              "example": "Ejercicio de Matemáticas"
+            },
+            "fechaEntrega": {
+              "type": "string",
+              "format": "date",
+              "example": "2025-02-10"
+            },
+            "profesor": {
+              "type": "string",
+              "example": "Juan Pérez"
+            }
+          }
+        }
+      }
+    }
+  }
+  
