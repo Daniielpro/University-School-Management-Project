@@ -2,7 +2,7 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 const dbConfig = {
-    host: process.env.DB_HOST || 'database-1.crgu1k6u14fx.us-east-1.rds.amazonaws.com',
+    host: process.env.DB_HOST || 'database-1.c2ki51gpg3x2.us-east-1.rds.amazonaws.com',
     user: process.env.DB_USER || 'admin',
     password: process.env.DB_PASSWORD || '1751404730', 
     database: process.env.DB_NAME || 'exam_reminders'
