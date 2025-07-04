@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+requests
+pydantic
+requests
+uvicorn[standard]
+websockets

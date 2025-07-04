@@ -1,0 +1,5 @@
+com\example\maestro_service\MaestroServiceApplication.class
+com\example\maestro_service\model\Maestro.class
+com\example\maestro_service\service\MaestroService.class
+com\example\maestro_service\controller\MaestroController.class
+com\example\maestro_service\repository\MaestroRepository.class

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Tareas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Gestión de Tareas</h1>
+
+    <h2>Agregar Tarea</h2>
+    <form id="tarea-form">
+        <input type="text" id="tarea" placeholder="Nombre de la tarea" required>
+        <input type="date" id="fechaEntrega" required>
+        <select id="profesor"></select>
+        <button type="submit">Agregar Tarea</button>
+    </form>
+
+    <h2>Lista de Tareas</h2>
+    <ul id="tareas-list"></ul>
+
+    <script src="app.js"></script>
+</body>
+</html>

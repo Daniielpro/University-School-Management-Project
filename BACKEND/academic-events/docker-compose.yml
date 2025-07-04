@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  create-event-service:
+    build: ./create-event-service
+    container_name: create-event-service
+    restart: always
+    ports:
+      - "8093:8093"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://mongo:27017/academic-events
+
+  delete-event-service:
+    build: ./delete-event-service
+    container_name: delete-event-service
+    restart: always
+    ports:
+      - "8094:8094"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://mongo:27017/academic-events
+
+  list-event-service:
+    build: ./list-event-service
+    container_name: list-event-service
+    restart: always
+    ports:
+      - "8095:8095"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://mongo:27017/academic-events
+
+  update-event-service:
+    build: ./update-event-service
+    container_name: update-event-service
+    restart: always
+    ports:
+      - "8096:8096"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: mongodb://mongo:27017/academic-events
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "8097:8097"
+    depends_on:
+      - create-event-service
+      - delete-event-service
+      - list-event-service
+      - update-event-service
+
+volumes:
+  mongo_data:
